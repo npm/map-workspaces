@@ -19,6 +19,13 @@ function getPackages (pkgPathnames) {
   return Promise.all(promisedPackageJsons)
 }
 
+function getDuplicateWorkspace () {
+  return Object.assign(
+    new Error('must not have multiple workspaces with the same name'),
+    { code: 'EDUPLICATEWORKSPACE' }
+  )
+}
+
 async function mapWorkspaces (pkg = {}, opts) {
   const { workspaces = [] } = pkg
   const patterns = Array.isArray(workspaces.packages)
@@ -50,6 +57,10 @@ async function mapWorkspaces (pkg = {}, opts) {
   pkgPathnames.forEach((packagePathname, index) => {
     const { name } = packageJsons[index] || {}
     if (name) {
+      if (results.get(name)) {
+        throw getDuplicateWorkspace()
+      }
+
       results.set(name, path.dirname(packagePathname))
     }
   })

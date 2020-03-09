@@ -49,3 +49,29 @@ test('workspaces config using simplistic glob', t => {
   )
   t.end()
 })
+
+test('duplicated workspaces config', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }'
+      },
+      b: {
+        'package.json': '{ "name": "a" }'
+      }
+    }
+  })
+
+  t.rejects(
+    mapWorskpaces({
+      workspaces: {
+        packages: [
+          'packages/*'
+        ]
+      }
+    }, { cwd }),
+    { code: 'EDUPLICATEWORKSPACE' },
+    'should throw an error'
+  )
+  t.end()
+})
