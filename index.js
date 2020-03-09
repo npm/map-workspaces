@@ -26,7 +26,7 @@ function getDuplicateWorkspace () {
   )
 }
 
-async function mapWorkspaces (pkg = {}, opts) {
+async function mapWorkspaces (pkg = {}, opts = {}) {
   const { workspaces = [] } = pkg
   const patterns = Array.isArray(workspaces.packages)
     ? workspaces.packages
@@ -53,9 +53,9 @@ async function mapWorkspaces (pkg = {}, opts) {
     .then(concatResults)
     .then(retrievePackagePathnames)
 
-  const packageJsons = await getPackages(pkgPathnames) || []
+  const packageJsons = await getPackages(pkgPathnames)
   pkgPathnames.forEach((packagePathname, index) => {
-    const { name } = packageJsons[index] || {}
+    const { name } = packageJsons[index]
     if (name) {
       if (results.get(name)) {
         throw getDuplicateWorkspace()
