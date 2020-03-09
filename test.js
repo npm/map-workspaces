@@ -9,14 +9,14 @@ test('simple workspaces config', t => {
     b: {
       'package.json': '{ "name": "b" }'
     }
-  });
+  })
 
   t.resolveMatchSnapshot(
     mapWorskpaces({
       workspaces: {
         packages: [
-          "a",
-          "b"
+          'a',
+          'b'
         ]
       }
     }, { cwd }),
@@ -35,13 +35,13 @@ test('workspaces config using simplistic glob', t => {
         'package.json': '{ "name": "b" }'
       }
     }
-  });
+  })
 
   t.resolveMatchSnapshot(
     mapWorskpaces({
       workspaces: {
         packages: [
-          "packages/*"
+          'packages/*'
         ]
       }
     }, { cwd }),

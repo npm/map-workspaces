@@ -5,13 +5,13 @@ const rpj = require('read-package-json-fast')
 const glob = require('glob')
 const pGlob = promisify(glob)
 
-function concatResults(globs) {
+function concatResults (globs) {
   return globs.reduce(
     (res, glob) => res.concat(glob)
-  , [])
+    , [])
 }
 
-function getPackages(pkgPathnames) {
+function getPackages (pkgPathnames) {
   const promisedPackageJsons = pkgPathnames.map(
     packagePathname => rpj(packagePathname)
   )
@@ -19,15 +19,14 @@ function getPackages(pkgPathnames) {
   return Promise.all(promisedPackageJsons)
 }
 
-async function mapWorkspaces(pkg = {}, opts) {
+async function mapWorkspaces (pkg = {}, opts) {
   const { workspaces = [] } = pkg
   const patterns = Array.isArray(workspaces.packages)
     ? workspaces.packages
     : workspaces
   const results = new Map()
 
-  if (!Array.isArray(patterns) || !patterns.length)
-    return results
+  if (!Array.isArray(patterns) || !patterns.length) { return results }
 
   const getPathnames = () => Promise.all(
     patterns.map(pattern => pGlob(pattern, opts))
@@ -42,7 +41,6 @@ async function mapWorkspaces(pkg = {}, opts) {
     pathnames.map(
       pathname => getPackagePathname(pathname)
     )
-
 
   const pkgPathnames = await getPathnames()
     .then(concatResults)
