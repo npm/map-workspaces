@@ -6,9 +6,13 @@ const glob = require('glob')
 const pGlob = promisify(glob)
 
 function concatResults (globs) {
-  return globs.reduce(
-    (res, glob) => res.concat(glob)
-    , [])
+  return globs.reduce((res, glob) => res.concat(glob), [])
+}
+
+function getGlobPattern(pattern) {
+  return pattern.endsWith('/')
+    ? pattern
+    : `${pattern}/`
 }
 
 function getPackages (pkgPathnames) {
@@ -43,7 +47,7 @@ async function mapWorkspaces (pkg = {}, opts = {}) {
   if (!Array.isArray(patterns) || !patterns.length) { return results }
 
   const getPathnames = () => Promise.all(
-    patterns.map(pattern => pGlob(pattern, opts))
+    patterns.map(pattern => pGlob(getGlobPattern(pattern), opts))
   )
 
   const getPackagePathname = pathname => {

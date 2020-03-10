@@ -251,3 +251,53 @@ test('unexpected rpj errors', t => {
     'should reject with unexpected error'
   )
 })
+
+test('nested glob lookups', t => {
+  const cwd = path.relative(
+    __dirname,
+    t.testdir({
+      packages: {
+        a: {
+          'package.json': '{ "name": "a" }'
+        }
+      }
+    })
+  )
+
+  return t.resolveMatchSnapshot(
+    mapWorskpaces({
+      workspaces: {
+        packages: [
+          'packages/**'
+        ]
+      }
+    }, { cwd }),
+    'should return a valid map'
+  )
+})
+
+test('use of / at end of defined globs', t => {
+  const cwd = path.relative(
+    __dirname,
+    t.testdir({
+      a: {
+        'package.json': '{ "name": "a" }'
+      },
+      b: {
+        'package.json': '{ "name": "b" }'
+      }
+    })
+  )
+
+  return t.resolveMatchSnapshot(
+    mapWorskpaces({
+      workspaces: {
+        packages: [
+          'a/',
+          'b/'
+        ]
+      }
+    }, { cwd }),
+    'should return a valid map'
+  )
+})

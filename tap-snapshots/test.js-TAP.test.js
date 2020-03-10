@@ -20,6 +20,12 @@ exports[`test.js TAP invalid packages declaration > should return an empty map 1
 Map {}
 `
 
+exports[`test.js TAP nested glob lookups > should return a valid map 1`] = `
+Map {
+  "a" => "test-nested-glob-lookups/packages/a",
+}
+`
+
 exports[`test.js TAP no cwd provided > should return valid result using cwd value 1`] = `
 Map {
   "a" => "test-no-cwd-provided/packages/a",
@@ -40,6 +46,13 @@ exports[`test.js TAP simple workspaces config > should return a valid map 1`] = 
 Map {
   "a" => "test-simple-workspaces-config/a",
   "b" => "test-simple-workspaces-config/b",
+}
+`
+
+exports[`test.js TAP use of / at end of defined globs > should return a valid map 1`] = `
+Map {
+  "a" => "test-use-of-at-end-of-defined-globs/a",
+  "b" => "test-use-of-at-end-of-defined-globs/b",
 }
 `
 
