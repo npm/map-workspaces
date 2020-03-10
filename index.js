@@ -9,7 +9,7 @@ function concatResults (globs) {
   return globs.reduce((res, glob) => res.concat(glob), [])
 }
 
-function getGlobPattern(pattern) {
+function getGlobPattern (pattern) {
   return pattern.endsWith('/')
     ? pattern
     : `${pattern}/`
@@ -66,7 +66,7 @@ async function mapWorkspaces (pkg = {}, opts = {}) {
 
   const packageJsons = await getPackages(pkgPathnames)
   for (const index of pkgPathnames.keys()) {
-    const packagePathname = pkgPathnames[index];
+    const packagePathname = pkgPathnames[index]
     const { name } = packageJsons[index]
     if (name) {
       if (results.get(name)) {
