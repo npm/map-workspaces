@@ -6,7 +6,6 @@ const requireInject = require('require-inject')
 
 const mapWorskpaces = require('./index.js')
 
-
 test('simple workspaces config', t => {
   const cwd = path.relative(
     __dirname,
@@ -124,7 +123,7 @@ test('invalid packages declaration', t => {
 })
 
 test('no pkg provided', t => {
-  const cwd = t.testdir({
+  t.testdir({
     packages: {
       a: {
         'package.json': '{ "name": "a" }'
@@ -191,5 +190,64 @@ test('no package name', t => {
       workspaces: ['a', 'b']
     }, { cwd }),
     'should ignore packages missing a valid name'
+  )
+})
+
+test('empty folders', t => {
+  const cwd = path.relative(
+    __dirname,
+    t.testdir({
+      a: {
+        'package.json': '{ "name": "a" }'
+      },
+      b: {
+        'package.json': '{ "name": "b" }'
+      },
+      c: {}
+    })
+  )
+
+  return t.resolveMatchSnapshot(
+    mapWorskpaces({
+      workspaces: {
+        packages: [
+          'a',
+          'b',
+          'c'
+        ]
+      }
+    }, { cwd }),
+    'should ignore empty folders'
+  )
+})
+
+test('unexpected rpj errors', t => {
+  const cwd = t.testdir({
+    a: {
+      'package.json': '{ "name": "a" }'
+    },
+    b: {
+      'package.json': '{ "name": "b" }'
+    }
+  })
+
+  const err = new Error('ERR')
+  err.code = 'ERR'
+
+  const mapW = requireInject('./index.js', {
+    'read-package-json-fast': () => Promise.reject(err)
+  })
+
+  return t.rejects(
+    mapW({
+      workspaces: {
+        packages: [
+          'a',
+          'b'
+        ]
+      }
+    }, { cwd }),
+    err,
+    'should reject with unexpected error'
   )
 })

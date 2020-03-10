@@ -14,6 +14,13 @@ function concatResults (globs) {
 function getPackages (pkgPathnames) {
   const promisedPackageJsons = pkgPathnames.map(
     packagePathname => rpj(packagePathname)
+      .catch(err => {
+        if (err.code === 'ENOENT') {
+          return {}
+        } else {
+          throw err
+        }
+      })
   )
 
   return Promise.all(promisedPackageJsons)
@@ -54,7 +61,8 @@ async function mapWorkspaces (pkg = {}, opts = {}) {
     .then(retrievePackagePathnames)
 
   const packageJsons = await getPackages(pkgPathnames)
-  pkgPathnames.forEach((packagePathname, index) => {
+  for (const index of pkgPathnames.keys()) {
+    const packagePathname = pkgPathnames[index];
     const { name } = packageJsons[index]
     if (name) {
       if (results.get(name)) {
@@ -63,7 +71,7 @@ async function mapWorkspaces (pkg = {}, opts = {}) {
 
       results.set(name, path.dirname(packagePathname))
     }
-  })
+  }
 
   return results
 }

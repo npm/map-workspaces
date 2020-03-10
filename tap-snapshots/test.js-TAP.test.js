@@ -5,6 +5,13 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
+exports[`test.js TAP empty folders > should ignore empty folders 1`] = `
+Map {
+  "a" => "test-empty-folders/a",
+  "b" => "test-empty-folders/b",
+}
+`
+
 exports[`test.js TAP empty packages declaration > should return an empty map 1`] = `
 Map {}
 `
