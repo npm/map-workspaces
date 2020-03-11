@@ -16,6 +16,12 @@ exports[`test.js TAP empty packages declaration > should return an empty map 1`]
 Map {}
 `
 
+exports[`test.js TAP ignore option > should ignore things from opts.ignore 1`] = `
+Map {
+  "a" => "{CWD}/test-ignore-option/packages/a",
+}
+`
+
 exports[`test.js TAP invalid packages declaration > should return an empty map 1`] = `
 Map {}
 `
@@ -23,6 +29,14 @@ Map {}
 exports[`test.js TAP nested glob lookups > should return a valid map 1`] = `
 Map {
   "a" => "{CWD}/test-nested-glob-lookups/packages/a",
+}
+`
+
+exports[`test.js TAP nested node_modules > should ignore packages within node_modules 1`] = `
+Map {
+  "a" => "{CWD}/test-nested-node-modules/packages/a",
+  "b" => "{CWD}/test-nested-node-modules/packages/b",
+  "e" => "{CWD}/test-nested-node-modules/foo/bar/baz/e",
 }
 `
 

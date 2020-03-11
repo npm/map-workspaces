@@ -5,8 +5,15 @@ const requireInject = require('require-inject')
 
 const mapWorskpaces = require('./index.js')
 
-tap.cleanSnapshot = str =>
-  str.split(process.cwd()).join('{CWD}').replace('\\', '/')
+tap.cleanSnapshot = str => {
+  const cleanPath = path => path
+    .replace(/\\+/g, '/') // normalize slashes
+    .replace(/"\w:/g, '"') // gets rid of drive letter in snapshot
+    .replace(/^\w:/g, '') // gets rid of drive letter in cwd/paths
+  const cwd = cleanPath(process.cwd())
+  const pathname = cleanPath(str)
+  return pathname.split(cwd).join('{CWD}')
+}
 
 test('simple workspaces config', t => {
   const cwd = t.testdir({
@@ -280,5 +287,96 @@ test('use of / at end of defined globs', t => {
       }
     }, { cwd }),
     'should return a valid map'
+  )
+})
+
+test('nested node_modules', t => {
+  const cwd = t.testdir({
+    node_modules: {
+      d: {
+        'package.json': '{ "name": "d" }'
+      }
+    },
+    foo: {
+      bar: {
+        node_modules: {
+          f: {
+            'package.json': '{ "name": "f" }'
+          }
+        },
+        baz: {
+          e: {
+            'package.json': '{ "name": "e" }'
+          }
+        }
+      }
+    },
+    packages: {
+      node_modules: {
+        g: {
+          'package.json': '{ "name": "g" }'
+        }
+      },
+      a: {
+        'package.json': '{ "name": "a" }',
+        node_modules: {
+          c: {
+            'package.json': '{ "name": "c" }'
+          }
+        }
+      },
+      b: {
+        'package.json': '{ "name": "b" }'
+      }
+    }
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorskpaces({
+      workspaces: [
+        'packages/*',
+        'foo/**'
+      ]
+    }, { cwd }),
+    'should ignore packages within node_modules'
+  )
+})
+
+test('ignore option', t => {
+  const cwd = t.testdir({
+    foo: {
+      bar: {
+        baz: {
+          e: {
+            'package.json': '{ "name": "e" }'
+          }
+        },
+        node_modules: {
+          b: {
+            'package.json': '{ "name": "b" }'
+          }
+        }
+      }
+    },
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }',
+        node_modules: {
+          c: {
+            'package.json': '{ "name": "c" }'
+          }
+        }
+      }
+    }
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorskpaces({
+      workspaces: [
+        'packages/*',
+        'foo/**'
+      ]
+    }, { cwd, ignore: ['**/baz/**'] }),
+    'should ignore things from opts.ignore'
   )
 })

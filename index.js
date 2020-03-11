@@ -46,8 +46,15 @@ async function mapWorkspaces (pkg = {}, opts = {}) {
 
   if (!Array.isArray(patterns) || !patterns.length) { return results }
 
+  const globOpts = {
+    ...opts,
+    ignore: [
+      ...opts.ignore || [],
+      ...['**/node_modules/**']
+    ]
+  }
   const getPathnames = () => Promise.all(
-    patterns.map(pattern => pGlob(getGlobPattern(pattern), opts))
+    patterns.map(pattern => pGlob(getGlobPattern(pattern), globOpts))
   )
 
   const getPackagePathname = pathname => {
