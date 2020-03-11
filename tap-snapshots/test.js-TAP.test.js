@@ -7,8 +7,8 @@
 'use strict'
 exports[`test.js TAP empty folders > should ignore empty folders 1`] = `
 Map {
-  "a" => "test-empty-folders/a",
-  "b" => "test-empty-folders/b",
+  "a" => "{CWD}/test-empty-folders/a",
+  "b" => "{CWD}/test-empty-folders/b",
 }
 `
 
@@ -22,19 +22,19 @@ Map {}
 
 exports[`test.js TAP nested glob lookups > should return a valid map 1`] = `
 Map {
-  "a" => "test-nested-glob-lookups/packages/a",
+  "a" => "{CWD}/test-nested-glob-lookups/packages/a",
 }
 `
 
 exports[`test.js TAP no cwd provided > should return valid result using cwd value 1`] = `
 Map {
-  "a" => "test-no-cwd-provided/packages/a",
+  "a" => "{CWD}/test-no-cwd-provided/packages/a",
 }
 `
 
 exports[`test.js TAP no package name > should ignore packages missing a valid name 1`] = `
 Map {
-  "b" => "test-no-package-name/b",
+  "b" => "{CWD}/test-no-package-name/b",
 }
 `
 
@@ -44,21 +44,21 @@ Map {}
 
 exports[`test.js TAP simple workspaces config > should return a valid map 1`] = `
 Map {
-  "a" => "test-simple-workspaces-config/a",
-  "b" => "test-simple-workspaces-config/b",
+  "a" => "{CWD}/test-simple-workspaces-config/a",
+  "b" => "{CWD}/test-simple-workspaces-config/b",
 }
 `
 
 exports[`test.js TAP use of / at end of defined globs > should return a valid map 1`] = `
 Map {
-  "a" => "test-use-of-at-end-of-defined-globs/a",
-  "b" => "test-use-of-at-end-of-defined-globs/b",
+  "a" => "{CWD}/test-use-of-at-end-of-defined-globs/a",
+  "b" => "{CWD}/test-use-of-at-end-of-defined-globs/b",
 }
 `
 
 exports[`test.js TAP workspaces config using simplistic glob > should return a valid map 1`] = `
 Map {
-  "a" => "test-workspaces-config-using-simplistic-glob/packages/a",
-  "b" => "test-workspaces-config-using-simplistic-glob/packages/b",
+  "a" => "{CWD}/test-workspaces-config-using-simplistic-glob/packages/a",
+  "b" => "{CWD}/test-workspaces-config-using-simplistic-glob/packages/b",
 }
 `

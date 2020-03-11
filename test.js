@@ -1,23 +1,22 @@
-const path = require('path')
-
-const { test } = require('tap')
+const tap = require('tap')
+const { test } = tap
 
 const requireInject = require('require-inject')
 
 const mapWorskpaces = require('./index.js')
 
+tap.cleanSnapshot = str =>
+  str.split(process.cwd()).join('{CWD}').replace('\\', '/')
+
 test('simple workspaces config', t => {
-  const cwd = path.relative(
-    __dirname,
-    t.testdir({
-      a: {
-        'package.json': '{ "name": "a" }'
-      },
-      b: {
-        'package.json': '{ "name": "b" }'
-      }
-    })
-  )
+  const cwd = t.testdir({
+    a: {
+      'package.json': '{ "name": "a" }'
+    },
+    b: {
+      'package.json': '{ "name": "b" }'
+    }
+  })
 
   return t.resolveMatchSnapshot(
     mapWorskpaces({
@@ -33,19 +32,16 @@ test('simple workspaces config', t => {
 })
 
 test('workspaces config using simplistic glob', t => {
-  const cwd = path.relative(
-    __dirname,
-    t.testdir({
-      packages: {
-        a: {
-          'package.json': '{ "name": "a" }'
-        },
-        b: {
-          'package.json': '{ "name": "b" }'
-        }
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }'
+      },
+      b: {
+        'package.json': '{ "name": "b" }'
       }
-    })
-  )
+    }
+  })
 
   return t.resolveMatchSnapshot(
     mapWorskpaces({
@@ -138,20 +134,17 @@ test('no pkg provided', t => {
 })
 
 test('no cwd provided', t => {
-  const cwd = path.relative(
-    __dirname,
-    t.testdir({
-      packages: {
-        a: {
-          'package.json': '{ "name": "a" }'
-        }
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }'
       }
-    })
-  )
+    }
+  })
 
   const mapW = requireInject('./index.js', {
     glob: (pattern, opts, cb) => {
-      cb(null, [path.join('packages', 'a')])
+      cb(null, 'packages/a')
     }
   })
 
@@ -173,17 +166,14 @@ test('no cwd provided', t => {
 })
 
 test('no package name', t => {
-  const cwd = path.relative(
-    __dirname,
-    t.testdir({
-      a: {
-        'package.json': '{ "version": "1.0.0" }'
-      },
-      b: {
-        'package.json': '{ "name": "b" }'
-      }
-    })
-  )
+  const cwd = t.testdir({
+    a: {
+      'package.json': '{ "version": "1.0.0" }'
+    },
+    b: {
+      'package.json': '{ "name": "b" }'
+    }
+  })
 
   return t.resolveMatchSnapshot(
     mapWorskpaces({
@@ -194,18 +184,15 @@ test('no package name', t => {
 })
 
 test('empty folders', t => {
-  const cwd = path.relative(
-    __dirname,
-    t.testdir({
-      a: {
-        'package.json': '{ "name": "a" }'
-      },
-      b: {
-        'package.json': '{ "name": "b" }'
-      },
-      c: {}
-    })
-  )
+  const cwd = t.testdir({
+    a: {
+      'package.json': '{ "name": "a" }'
+    },
+    b: {
+      'package.json': '{ "name": "b" }'
+    },
+    c: {}
+  })
 
   return t.resolveMatchSnapshot(
     mapWorskpaces({
@@ -253,16 +240,13 @@ test('unexpected rpj errors', t => {
 })
 
 test('nested glob lookups', t => {
-  const cwd = path.relative(
-    __dirname,
-    t.testdir({
-      packages: {
-        a: {
-          'package.json': '{ "name": "a" }'
-        }
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }'
       }
-    })
-  )
+    }
+  })
 
   return t.resolveMatchSnapshot(
     mapWorskpaces({
@@ -277,17 +261,14 @@ test('nested glob lookups', t => {
 })
 
 test('use of / at end of defined globs', t => {
-  const cwd = path.relative(
-    __dirname,
-    t.testdir({
-      a: {
-        'package.json': '{ "name": "a" }'
-      },
-      b: {
-        'package.json': '{ "name": "b" }'
-      }
-    })
-  )
+  const cwd = t.testdir({
+    a: {
+      'package.json': '{ "name": "a" }'
+    },
+    b: {
+      'package.json': '{ "name": "b" }'
+    }
+  })
 
   return t.resolveMatchSnapshot(
     mapWorskpaces({
