@@ -1,6 +1,6 @@
 # @npmcli/map-workspaces
 
-[![NPM version](https://img.shields.io/npm/v/npmcli/map-workspaces)](https://www.npmjs.com/package/@npmcli/map-workspaces)
+[![NPM version](https://img.shields.io/npm/v/@npmcli/map-workspaces)](https://www.npmjs.com/package/@npmcli/map-workspaces)
 [![Build Status](https://img.shields.io/github/workflow/status/npm/map-workspaces/node-ci)](https://github.com/npm/map-workspaces)
 [![License](https://img.shields.io/github/license/npm/map-workspaces)](https://github.com/npm/map-workspaces/blob/master/LICENSE)
 
