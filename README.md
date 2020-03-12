@@ -16,7 +16,7 @@ Long version: Reads the `workspaces` property from a valid **workspaces configur
 
 ```js
 const mapWorkspaces = require('@npmcli/map-workspaces')
-mapWorkspaces({
+await mapWorkspaces({
   workspaces: {
     packages: [
       "a",
@@ -50,7 +50,7 @@ Given a folder structure such as:
 
 ```js
 const mapWorkspaces = require('@npmcli/map-workspaces')
-mapWorkspaces({
+await mapWorkspaces({
   workspaces: [
     "apps/*"
   ]
@@ -65,7 +65,7 @@ mapWorkspaces({
 
 ## API:
 
-### `mapWorkspaces(pkg, opts = {}) -> Map`
+### `mapWorkspaces(pkg, opts = {}) -> Promise<Map>`
 
 - `pkg`: A valid `package.json` **Object**
 - `opts`:
