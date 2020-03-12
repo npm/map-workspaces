@@ -31,6 +31,38 @@ mapWorkspaces({
 // }
 ```
 
+## Examples:
+
+### Glob usage:
+
+Given a folder structure such as:
+
+```
+├── package.json
+└── apps
+   ├── a
+   │   └── package.json
+   ├── b
+   │   └── package.json
+   └── c
+       └── package.json
+```
+
+```js
+const mapWorkspaces = require('@npmcli/map-workspaces')
+mapWorkspaces({
+  workspaces: [
+    "apps/*"
+  ]
+}, { cwd })
+// ->
+// Map {
+//   'a': '<cwd>/apps/a'
+//   'b': '<cwd>/apps/b'
+//   'c': '<cwd>/apps/c'
+// }
+```
+
 ## API:
 
 ### `mapWorkspaces(pkg, opts = {}) -> Map`
