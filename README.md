@@ -15,7 +15,8 @@ Long version: Reads the `workspaces` property from a valid **workspaces configur
 ## Usage:
 
 ```js
-mapWorskpaces({
+const mapWorkspaces = require('@npmcli/map-workspaces')
+mapWorkspaces({
   workspaces: {
     packages: [
       "a",
