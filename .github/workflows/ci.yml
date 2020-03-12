@@ -14,7 +14,7 @@
 #   coverage will need to be adjusted.
 #
 ################################################################################
-name: Node CI
+name: node-ci
 
 on: [push, pull_request]
 
