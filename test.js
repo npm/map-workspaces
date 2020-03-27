@@ -3,7 +3,7 @@ const { test } = tap
 
 const requireInject = require('require-inject')
 
-const mapWorskpaces = require('./index.js')
+const mapWorkspaces = require('./index.js')
 
 tap.cleanSnapshot = str => {
   const cleanPath = path => path
@@ -26,14 +26,17 @@ test('simple workspaces config', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: {
-        packages: [
-          'a',
-          'b'
-        ]
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'a',
+            'b'
+          ]
+        }
       }
-    }, { cwd }),
+    }),
     'should return a valid map'
   )
 })
@@ -51,13 +54,16 @@ test('workspaces config using simplistic glob', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: {
-        packages: [
-          'packages/*'
-        ]
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'packages/*'
+          ]
+        }
       }
-    }, { cwd }),
+    }),
     'should return a valid map'
   )
 })
@@ -75,13 +81,16 @@ test('duplicated workspaces config', t => {
   })
 
   return t.rejects(
-    mapWorskpaces({
-      workspaces: {
-        packages: [
-          'packages/*'
-        ]
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'packages/*'
+          ]
+        }
       }
-    }, { cwd }),
+    }),
     { code: 'EDUPLICATEWORKSPACE' },
     'should throw an error'
   )
@@ -97,11 +106,14 @@ test('empty packages declaration', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: {
-        packages: []
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: []
+        }
       }
-    }, { cwd }),
+    }),
     'should return an empty map'
   )
 })
@@ -116,11 +128,14 @@ test('invalid packages declaration', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: {
-        packages: ''
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: ''
+        }
       }
-    }, { cwd }),
+    }),
     'should return an empty map'
   )
 })
@@ -135,7 +150,7 @@ test('no pkg provided', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces(),
+    mapWorkspaces(),
     'should return an empty map'
   )
 })
@@ -164,9 +179,11 @@ test('no cwd provided', t => {
 
   return t.resolveMatchSnapshot(
     mapW({
-      workspaces: [
-        'packages/*'
-      ]
+      pkg: {
+        workspaces: [
+          'packages/*'
+        ]
+      }
     }),
     'should return valid result using cwd value'
   )
@@ -183,9 +200,12 @@ test('no package name', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: ['a', 'b']
-    }, { cwd }),
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: ['a', 'b']
+      }
+    }),
     'should ignore packages missing a valid name'
   )
 })
@@ -202,15 +222,18 @@ test('empty folders', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: {
-        packages: [
-          'a',
-          'b',
-          'c'
-        ]
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'a',
+            'b',
+            'c'
+          ]
+        }
       }
-    }, { cwd }),
+    }),
     'should ignore empty folders'
   )
 })
@@ -234,13 +257,16 @@ test('unexpected rpj errors', t => {
 
   return t.rejects(
     mapW({
-      workspaces: {
-        packages: [
-          'a',
-          'b'
-        ]
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'a',
+            'b'
+          ]
+        }
       }
-    }, { cwd }),
+    }),
     err,
     'should reject with unexpected error'
   )
@@ -256,13 +282,16 @@ test('nested glob lookups', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: {
-        packages: [
-          'packages/**'
-        ]
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'packages/**'
+          ]
+        }
       }
-    }, { cwd }),
+    }),
     'should return a valid map'
   )
 })
@@ -278,14 +307,17 @@ test('use of / at end of defined globs', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: {
-        packages: [
-          'a/',
-          'b/'
-        ]
+    mapWorkspaces({
+      cwd, 
+      pkg: {
+        workspaces: {
+          packages: [
+            'a/',
+            'b/'
+          ]
+        }
       }
-    }, { cwd }),
+    }),
     'should return a valid map'
   )
 })
@@ -332,12 +364,15 @@ test('nested node_modules', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: [
-        'packages/*',
-        'foo/**'
-      ]
-    }, { cwd }),
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages/*',
+          'foo/**'
+        ]
+      }
+    }),
     'should ignore packages within node_modules'
   )
 })
@@ -371,12 +406,16 @@ test('ignore option', t => {
   })
 
   return t.resolveMatchSnapshot(
-    mapWorskpaces({
-      workspaces: [
-        'packages/*',
-        'foo/**'
-      ]
-    }, { cwd, ignore: ['**/baz/**'] }),
+    mapWorkspaces({
+      cwd,
+      ignore: ['**/baz/**'],
+      pkg: {
+        workspaces: [
+          'packages/*',
+          'foo/**'
+        ]
+      }
+    }),
     'should ignore things from opts.ignore'
   )
 })

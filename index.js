@@ -37,7 +37,8 @@ function getDuplicateWorkspace () {
   )
 }
 
-async function mapWorkspaces (pkg = {}, opts = {}) {
+async function mapWorkspaces (opts = {}) {
+  const { pkg = {} } = opts
   const { workspaces = [] } = pkg
   const patterns = Array.isArray(workspaces.packages)
     ? workspaces.packages
