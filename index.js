@@ -30,22 +30,34 @@ function getPackages (pkgPathnames) {
   return Promise.all(promisedPackageJsons)
 }
 
-function getDuplicateWorkspace () {
+function getDuplicateWorkspaceError () {
   return Object.assign(
     new Error('must not have multiple workspaces with the same name'),
     { code: 'EDUPLICATEWORKSPACE' }
   )
 }
 
+function getMissingPkgError () {
+  return Object.assign(
+    new TypeError('missing pkg info'),
+    { code: 'EMAPWORKSPACESPKG' }
+  )
+}
+
 async function mapWorkspaces (opts = {}) {
-  const { pkg = {} } = opts
-  const { workspaces = [] } = pkg
+  if (!opts || !opts.pkg) {
+    throw getMissingPkgError()
+  }
+
+  const { workspaces = [] } = opts.pkg
   const patterns = Array.isArray(workspaces.packages)
     ? workspaces.packages
     : workspaces
   const results = new Map()
 
-  if (!Array.isArray(patterns) || !patterns.length) { return results }
+  if (!Array.isArray(patterns) || !patterns.length) {
+    return results
+  }
 
   const globOpts = {
     ...opts,
@@ -78,7 +90,7 @@ async function mapWorkspaces (opts = {}) {
     const { name } = packageJsons[index]
     if (name) {
       if (results.get(name)) {
-        throw getDuplicateWorkspace()
+        throw getDuplicateWorkspaceError()
       }
 
       results.set(name, path.dirname(packagePathname))

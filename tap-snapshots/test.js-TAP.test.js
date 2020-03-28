@@ -26,6 +26,14 @@ exports[`test.js TAP invalid packages declaration > should return an empty map 1
 Map {}
 `
 
+exports[`test.js TAP missing pkg info > should return an empty map 1`] = `
+Array [
+  Map {},
+  Map {},
+  Map {},
+]
+`
+
 exports[`test.js TAP nested glob lookups > should return a valid map 1`] = `
 Map {
   "a" => "{CWD}/test-nested-glob-lookups/packages/a",
@@ -50,10 +58,6 @@ exports[`test.js TAP no package name > should ignore packages missing a valid na
 Map {
   "b" => "{CWD}/test-no-package-name/b",
 }
-`
-
-exports[`test.js TAP no pkg provided > should return an empty map 1`] = `
-Map {}
 `
 
 exports[`test.js TAP simple workspaces config > should return a valid map 1`] = `

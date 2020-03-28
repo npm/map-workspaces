@@ -41,6 +41,53 @@ test('simple workspaces config', t => {
   )
 })
 
+test('missing pkg info', t => {
+  const cwd = t.testdir({
+    a: {
+      'package.json': '{ "name": "a" }'
+    }
+  })
+
+  const results = Promise.all([
+    mapWorkspaces({
+      cwd,
+      pkg: 1
+    }),
+    mapWorkspaces({
+      cwd,
+      pkg: 'foo'
+    }),
+    mapWorkspaces({
+      cwd,
+      pkg: {}
+    })
+  ])
+  return t.resolveMatchSnapshot(results, 'should return an empty map')
+})
+
+test('invalid options', async t => {
+  const invalid = [
+    () => mapWorkspaces({}),
+    () => mapWorkspaces({ pkg: null }),
+    () => mapWorkspaces([]),
+    () => mapWorkspaces('foo'),
+    () => mapWorkspaces(1),
+    () => mapWorkspaces(NaN),
+    () => mapWorkspaces(null),
+    () => mapWorkspaces()
+  ]
+
+  for (const i of invalid) {
+    await t.rejects(
+      i(),
+      { code: 'EMAPWORKSPACESPKG' },
+      'should throw a TypeError'
+    )
+  }
+
+  t.end()
+})
+
 test('workspaces config using simplistic glob', t => {
   const cwd = t.testdir({
     packages: {
@@ -136,21 +183,6 @@ test('invalid packages declaration', t => {
         }
       }
     }),
-    'should return an empty map'
-  )
-})
-
-test('no pkg provided', t => {
-  t.testdir({
-    packages: {
-      a: {
-        'package.json': '{ "name": "a" }'
-      }
-    }
-  })
-
-  return t.resolveMatchSnapshot(
-    mapWorkspaces(),
     'should return an empty map'
   )
 })
@@ -308,7 +340,7 @@ test('use of / at end of defined globs', t => {
 
   return t.resolveMatchSnapshot(
     mapWorkspaces({
-      cwd, 
+      cwd,
       pkg: {
         workspaces: {
           packages: [
