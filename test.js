@@ -223,11 +223,18 @@ test('no cwd provided', t => {
 
 test('no package name', t => {
   const cwd = t.testdir({
-    a: {
-      'package.json': '{ "version": "1.0.0" }'
-    },
-    b: {
-      'package.json': '{ "name": "b" }'
+    packages: {
+      a: {
+        'package.json': '{ "version": "1.0.0" }'
+      },
+      b: {
+        'package.json': '{ "name": "", "version": "1.0.0" }'
+      },
+      '@foo': {
+        bar: {
+          'package.json': '{ "version": "1.0.0" }'
+        }
+      }
     }
   })
 
@@ -235,10 +242,10 @@ test('no package name', t => {
     mapWorkspaces({
       cwd,
       pkg: {
-        workspaces: ['a', 'b']
+        workspaces: ['packages/**']
       }
     }),
-    'should ignore packages missing a valid name'
+    'should return map containing valid names as keys'
   )
 })
 

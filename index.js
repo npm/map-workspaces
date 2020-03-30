@@ -1,6 +1,7 @@
 const { promisify } = require('util')
 const path = require('path')
 
+const getName = require('@npmcli/name-from-folder')
 const rpj = require('read-package-json-fast')
 const glob = require('glob')
 const pGlob = promisify(glob)
@@ -20,7 +21,7 @@ function getPackages (pkgPathnames) {
     packagePathname => rpj(packagePathname)
       .catch(err => {
         if (err.code === 'ENOENT') {
-          return {}
+          return null
         } else {
           throw err
         }
@@ -86,15 +87,19 @@ async function mapWorkspaces (opts = {}) {
 
   const packageJsons = await getPackages(pkgPathnames)
   for (const index of pkgPathnames.keys()) {
-    const packagePathname = pkgPathnames[index]
-    const { name } = packageJsons[index]
-    if (name) {
-      if (results.get(name)) {
-        throw getDuplicateWorkspaceError()
-      }
-
-      results.set(name, path.dirname(packagePathname))
+    if (!packageJsons[index]) {
+      continue
     }
+
+    const packagePathname = path.dirname(pkgPathnames[index])
+    let { name } = packageJsons[index]
+    name = name || getName(packagePathname)
+
+    if (results.get(name)) {
+      throw getDuplicateWorkspaceError()
+    }
+
+    results.set(name, packagePathname)
   }
 
   return results

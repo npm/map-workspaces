@@ -41,6 +41,7 @@
     "tap": "^14.10.7"
   },
   "dependencies": {
+    "@npmcli/name-from-folder": "^1.0.1",
     "glob": "^7.1.6",
     "read-package-json-fast": "^1.1.3"
   }

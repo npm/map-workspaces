@@ -54,9 +54,11 @@ Map {
 }
 `
 
-exports[`test.js TAP no package name > should ignore packages missing a valid name 1`] = `
+exports[`test.js TAP no package name > should return map containing valid names as keys 1`] = `
 Map {
-  "b" => "{CWD}/test-no-package-name/b",
+  "@foo/bar" => "{CWD}/test-no-package-name/packages/@foo/bar",
+  "a" => "{CWD}/test-no-package-name/packages/a",
+  "b" => "{CWD}/test-no-package-name/packages/b",
 }
 `
 
