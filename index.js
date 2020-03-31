@@ -2,9 +2,25 @@ const { promisify } = require('util')
 const path = require('path')
 
 const getName = require('@npmcli/name-from-folder')
+const minimatch = require('minimatch')
 const rpj = require('read-package-json-fast')
 const glob = require('glob')
 const pGlob = promisify(glob)
+
+function getPatterns (workspaces) {
+  return Array.isArray(workspaces.packages)
+    ? workspaces.packages
+    : workspaces
+}
+
+function isEmpty (patterns) {
+ return !Array.isArray(patterns) || !patterns.length
+}
+
+function getPackageName (pkg, pathname) {
+    const { name } = pkg
+    return name || getName(pathname)
+}
 
 function concatResults (globs) {
   return globs.reduce((res, glob) => res.concat(glob), [])
@@ -40,8 +56,15 @@ function getDuplicateWorkspaceError () {
 
 function getMissingPkgError () {
   return Object.assign(
-    new TypeError('missing pkg info'),
+    new TypeError('mapWorkspaces missing pkg info'),
     { code: 'EMAPWORKSPACESPKG' }
+  )
+}
+
+function getMissingLockfileError () {
+  return Object.assign(
+    new TypeError('mapWorkspaces.virtual missing lockfile info'),
+    { code: 'EMAPWORKSPACESLOCKFILE' }
   )
 }
 
@@ -51,12 +74,10 @@ async function mapWorkspaces (opts = {}) {
   }
 
   const { workspaces = [] } = opts.pkg
-  const patterns = Array.isArray(workspaces.packages)
-    ? workspaces.packages
-    : workspaces
+  const patterns = getPatterns(workspaces)
   const results = new Map()
 
-  if (!Array.isArray(patterns) || !patterns.length) {
+  if (isEmpty(patterns)) {
     return results
   }
 
@@ -92,14 +113,50 @@ async function mapWorkspaces (opts = {}) {
     }
 
     const packagePathname = path.dirname(pkgPathnames[index])
-    let { name } = packageJsons[index]
-    name = name || getName(packagePathname)
+    const name = getPackageName(packageJsons[index], packagePathname)
 
     if (results.get(name)) {
       throw getDuplicateWorkspaceError()
     }
 
     results.set(name, packagePathname)
+  }
+
+  return results
+}
+
+mapWorkspaces.virtual = function (opts = {}) {
+  if (!opts || !opts.lockfile) {
+    throw getMissingLockfileError()
+  }
+
+  const { packages = {} } = opts.lockfile
+  const { workspaces = [] } = packages[''] || {}
+  const patterns = getPatterns(workspaces)
+  const results = new Map()
+
+  if (isEmpty(patterns)) {
+    return results
+  }
+
+  const getPackagePathname = pathname => {
+    const cwd = opts.cwd ? opts.cwd : process.cwd()
+    return path.join(cwd, pathname)
+  }
+
+  for (const packageKey of Object.keys(packages)) {
+    if (packageKey === '') {
+      continue
+    }
+
+    for (const pattern of patterns) {
+      if (minimatch(packageKey, pattern)) {
+        const packagePathname = getPackagePathname(packageKey)
+        const name = getPackageName(packages[packageKey], packagePathname)
+
+        results.set(name, packagePathname)
+      }
+    }
   }
 
   return results

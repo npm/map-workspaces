@@ -21,9 +21,9 @@
   "license": "ISC",
   "scripts": {
     "lint": "standard",
-    "test": "tap",
-    "snap": "tap",
-    "preversion": "npm test",
+    "test": "tap test*",
+    "snap": "tap test*",
+    "preversion": "npm test*",
     "postversion": "npm publish",
     "prepublishOnly": "git push origin --follow-tags"
   },
@@ -43,6 +43,7 @@
   "dependencies": {
     "@npmcli/name-from-folder": "^1.0.1",
     "glob": "^7.1.6",
+    "minimatch": "^3.0.4",
     "read-package-json-fast": "^1.1.3"
   }
 }
