@@ -5,6 +5,12 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
+exports[`test.virtual.js TAP negate globs in workspaces config > should return a valid map 1`] = `
+Map {
+  "a" => "{CWD}/test-virtual-negate-globs-in-workspaces-config/packages/a",
+}
+`
+
 exports[`test.virtual.js TAP should ignore nested node_modules > should return a valid map 1`] = `
 Map {
   "a" => "{CWD}/test-virtual-should-ignore-nested-node-modules/packages/a",

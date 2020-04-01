@@ -262,3 +262,50 @@ test('transitive dependencies', t => {
   t.end()
 })
 
+test('negate globs in workspaces config', t => {
+  const cwd = t.testdir()
+  t.matchSnapshot(
+    mapWorkspaces.virtual({
+      cwd,
+      lockfile: {
+        "name": "negate-glob-example",
+        "lockfileVersion": 2,
+        "requires": true,
+        "packages": {
+          "": {
+            "name": "negate-glob-example",
+            "workspaces": {
+              "packages": [
+                "packages/*",
+                "!packages/b"
+              ]
+            }
+          },
+          "packages/a": {
+            "name": "a",
+            "version": "1.0.0"
+          },
+          "packages/b": {
+            "name": "b",
+            "version": "1.0.0"
+          },
+          "node_modules/a": {
+            "resolved": "packages/a",
+            "link": true
+          }
+        },
+        "dependencies": {
+          "a": {
+            "version": "file:packages/a"
+          },
+          "b": {
+            "version": "file:packages/b"
+          }
+        }
+      }
+    }),
+    'should return a valid map'
+  )
+  t.end()
+})
+

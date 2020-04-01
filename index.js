@@ -7,10 +7,31 @@ const rpj = require('read-package-json-fast')
 const glob = require('glob')
 const pGlob = promisify(glob)
 
+function appendNegatedPatterns (patterns) {
+  const results = []
+  for (let pattern of patterns) {
+    const excl = pattern.match(/^!+/)
+    if (excl) {
+      pattern = pattern.substr(excl[0].length)
+    }
+
+    // strip off any / from the start of the pattern.  /foo => foo
+    pattern = pattern.replace(/^\/+/, '')
+
+    // an odd number of ! means a negated pattern.  !!foo ==> foo
+    const negate = excl && excl[0].length % 2 === 1
+    results.push({ pattern, negate })
+  }
+
+  return results
+}
+
 function getPatterns (workspaces) {
-  return Array.isArray(workspaces.packages)
-    ? workspaces.packages
-    : workspaces
+  return appendNegatedPatterns(
+    Array.isArray(workspaces.packages)
+      ? workspaces.packages
+      : workspaces
+  )
 }
 
 function isEmpty (patterns) {
@@ -149,12 +170,16 @@ mapWorkspaces.virtual = function (opts = {}) {
       continue
     }
 
-    for (const pattern of patterns) {
-      if (minimatch(packageKey, pattern)) {
+    for (const item of patterns) {
+      if (minimatch(packageKey, item.pattern)) {
         const packagePathname = getPackagePathname(packageKey)
         const name = getPackageName(packages[packageKey], packagePathname)
 
-        results.set(name, packagePathname)
+        if (item.negate) {
+          results.delete(name)
+        } else {
+          results.set(name, packagePathname)
+        }
       }
     }
   }
