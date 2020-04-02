@@ -5,6 +5,12 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
+exports[`test.js TAP double negate patterns > should include doubly-negated items into resulting map 1`] = `
+Map {
+  "a" => "{CWD}/test-double-negate-patterns/packages/a",
+}
+`
+
 exports[`test.js TAP empty folders > should ignore empty folders 1`] = `
 Map {
   "a" => "{CWD}/test-empty-folders/a",
@@ -67,6 +73,10 @@ Map {
   "a" => "{CWD}/test-simple-workspaces-config/a",
   "b" => "{CWD}/test-simple-workspaces-config/b",
 }
+`
+
+exports[`test.js TAP triple negate patterns > should exclude thrice-negated items from resulting map 1`] = `
+Map {}
 `
 
 exports[`test.js TAP try to declare node_modules > should not include declared packages within node_modules 1`] = `

@@ -578,6 +578,51 @@ test('multiple negate patterns', t => {
   )
 })
 
+test('double negate patterns', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }'
+      }
+    }
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          '!!packages/a',
+        ]
+      }
+    }),
+    'should include doubly-negated items into resulting map'
+  )
+})
+
+test('triple negate patterns', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }'
+      }
+    }
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages/*',
+          '!!!packages/a',
+        ]
+      }
+    }),
+    'should exclude thrice-negated items from resulting map'
+  )
+})
+
 test('try to declare node_modules', t => {
   const cwd = t.testdir({
     foo: {
