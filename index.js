@@ -27,11 +27,14 @@ function appendNegatedPatterns (patterns) {
 }
 
 function getPatterns (workspaces) {
-  return appendNegatedPatterns(
-    Array.isArray(workspaces.packages)
-      ? workspaces.packages
-      : workspaces
-  )
+  return [
+    ...appendNegatedPatterns(
+      Array.isArray(workspaces.packages)
+        ? workspaces.packages
+        : workspaces
+    ),
+    { pattern: '**/node_modules/**', negate: true },
+  ]
 }
 
 function isEmpty (patterns) {
@@ -154,10 +157,12 @@ mapWorkspaces.virtual = function (opts = {}) {
   const { packages = {} } = opts.lockfile
   const { workspaces = [] } = packages[''] || {}
   const patterns = getPatterns(workspaces)
-  const results = new Map()
+
+  // uses a pathname-keyed map in order to negate the exact items
+  const pathnames = new Map()
 
   if (isEmpty(patterns)) {
-    return results
+    return pathnames
   }
 
   const getPackagePathname = pathname => {
@@ -176,15 +181,16 @@ mapWorkspaces.virtual = function (opts = {}) {
         const name = getPackageName(packages[packageKey], packagePathname)
 
         if (item.negate) {
-          results.delete(name)
+          pathnames.delete(packagePathname)
         } else {
-          results.set(name, packagePathname)
+          pathnames.set(packagePathname, name)
         }
       }
     }
   }
 
-  return results
+  // Invert pathname-keyed to a proper name-to-pathnames Map
+  return new Map(Array.from(pathnames, item => item.reverse()))
 }
 
 module.exports = mapWorkspaces

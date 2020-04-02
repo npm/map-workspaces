@@ -304,7 +304,198 @@ test('negate globs in workspaces config', t => {
         }
       }
     }),
-    'should return a valid map'
+    'should not return negated workspaces'
+  )
+  t.end()
+})
+
+test('double-negated', t => {
+  const cwd = t.testdir()
+  t.matchSnapshot(
+    mapWorkspaces.virtual({
+      cwd,
+      lockfile: {
+        "name": "negate-glob-example",
+        "lockfileVersion": 2,
+        "requires": true,
+        "packages": {
+          "": {
+            "name": "negate-glob-example",
+            "workspaces": {
+              "packages": [
+                "packages/*",
+                "!!packages/b"
+              ]
+            }
+          },
+          "packages/a": {
+            "name": "a",
+            "version": "1.0.0"
+          },
+          "packages/b": {
+            "name": "b",
+            "version": "1.0.0"
+          },
+          "node_modules/a": {
+            "resolved": "packages/a",
+            "link": true
+          }
+        },
+        "dependencies": {
+          "a": {
+            "version": "file:packages/a"
+          },
+          "b": {
+            "version": "file:packages/b"
+          }
+        }
+      }
+    }),
+    'should return the doubly-negated item as part of the Map'
+  )
+  t.end()
+})
+
+test('triple-negated', t => {
+  const cwd = t.testdir()
+  t.matchSnapshot(
+    mapWorkspaces.virtual({
+      cwd,
+      lockfile: {
+        "name": "negate-glob-example",
+        "lockfileVersion": 2,
+        "requires": true,
+        "packages": {
+          "": {
+            "name": "negate-glob-example",
+            "workspaces": {
+              "packages": [
+                "packages/*",
+                "!!!packages/b"
+              ]
+            }
+          },
+          "packages/a": {
+            "name": "a",
+            "version": "1.0.0"
+          },
+          "packages/b": {
+            "name": "b",
+            "version": "1.0.0"
+          },
+          "node_modules/a": {
+            "resolved": "packages/a",
+            "link": true
+          }
+        },
+        "dependencies": {
+          "a": {
+            "version": "file:packages/a"
+          },
+          "b": {
+            "version": "file:packages/b"
+          }
+        }
+      }
+    }),
+    'should exclude that item from returned Map'
+  )
+  t.end()
+})
+
+test('matched then negated then match again', t => {
+  const cwd = t.testdir()
+  t.matchSnapshot(
+    mapWorkspaces.virtual({
+      cwd,
+      lockfile: {
+        "name": "negate-glob-example",
+        "lockfileVersion": 2,
+        "requires": true,
+        "packages": {
+          "": {
+            "name": "negate-glob-example",
+            "workspaces": {
+              "packages": [
+                "packages/*",
+                "!packages/b",
+                "packages/b"
+              ]
+            }
+          },
+          "packages/a": {
+            "name": "a",
+            "version": "1.0.0"
+          },
+          "packages/b": {
+            "name": "b",
+            "version": "1.0.0"
+          },
+          "node_modules/a": {
+            "resolved": "packages/a",
+            "link": true
+          }
+        },
+        "dependencies": {
+          "a": {
+            "version": "file:packages/a"
+          },
+          "b": {
+            "version": "file:packages/b"
+          }
+        }
+      }
+    }),
+    'should include item on returned Map'
+  )
+  t.end()
+})
+
+test('matched then negated then match again then negate again', t => {
+  const cwd = t.testdir()
+  t.matchSnapshot(
+    mapWorkspaces.virtual({
+      cwd,
+      lockfile: {
+        "name": "negate-glob-example",
+        "lockfileVersion": 2,
+        "requires": true,
+        "packages": {
+          "": {
+            "name": "negate-glob-example",
+            "workspaces": {
+              "packages": [
+                "packages/**",
+                "!packages/foo",
+                "packages/foo/*",
+                "!packages/foo/b",
+              ]
+            }
+          },
+          "packages/a": {
+            "name": "a",
+            "version": "1.0.0"
+          },
+          "packages/foo/b": {
+            "name": "b",
+            "version": "1.0.0"
+          },
+          "node_modules/a": {
+            "resolved": "packages/a",
+            "link": true
+          }
+        },
+        "dependencies": {
+          "a": {
+            "version": "file:packages/a"
+          },
+          "b": {
+            "version": "file:packages/foo/b"
+          }
+        }
+      }
+    }),
+    'should exclude negated item from returned Map'
   )
   t.end()
 })
