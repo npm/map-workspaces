@@ -54,6 +54,13 @@ function getPackageName (pkg, pathname) {
   return name || getName(pathname)
 }
 
+function pkgPathmame (opts) {
+  return (...args) => {
+    const cwd = opts.cwd ? opts.cwd : process.cwd()
+    return path.join.apply(null, [cwd, ...args])
+  }
+}
+
 // make sure glob pattern only matches folders
 function getGlobPattern (pattern) {
   return pattern.endsWith('/')
@@ -94,18 +101,15 @@ async function mapWorkspaces (opts = {}) {
     ]
   })
 
-  const getPackagePathname = pathname => {
-    const cwd = opts.cwd ? opts.cwd : /* istanbul ignore next */process.cwd()
-    return path.join(cwd, pathname, 'package.json')
-  }
+  const getPackagePathname = pkgPathmame(opts)
 
   for (const item of patterns) {
     const matches = await pGlob(getGlobPattern(item.pattern), getGlobOpts())
 
     for (const match of matches) {
       let pkg
-      const packageJsonPathname = getPackagePathname(match)
-      const packagePathname = path.dirname(getPackagePathname(match))
+      const packageJsonPathname = getPackagePathname(match, 'package.json')
+      const packagePathname = path.dirname(packageJsonPathname)
 
       try {
         pkg = await rpj(packageJsonPathname)
@@ -158,10 +162,7 @@ mapWorkspaces.virtual = function (opts = {}) {
     return results
   }
 
-  const getPackagePathname = pathname => {
-    const cwd = opts.cwd ? opts.cwd : process.cwd()
-    return path.join(cwd, pathname)
-  }
+  const getPackagePathname = pkgPathmame(opts)
 
   for (const packageKey of Object.keys(packages)) {
     if (packageKey === '') {
