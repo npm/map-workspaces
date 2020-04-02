@@ -592,7 +592,7 @@ test('double negate patterns', t => {
       cwd,
       pkg: {
         workspaces: [
-          '!!packages/a',
+          '!!packages/a'
         ]
       }
     }),
@@ -615,7 +615,7 @@ test('triple negate patterns', t => {
       pkg: {
         workspaces: [
           'packages/*',
-          '!!!packages/a',
+          '!!!packages/a'
         ]
       }
     }),
