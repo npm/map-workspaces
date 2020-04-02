@@ -1,8 +1,6 @@
 const tap = require('tap')
 const { test } = tap
 
-const requireInject = require('require-inject')
-
 const mapWorkspaces = require('./index.js')
 
 tap.cleanSnapshot = str => {
@@ -21,45 +19,45 @@ test('simple workspaces config', t => {
     mapWorkspaces.virtual({
       cwd,
       lockfile: {
-        "name": "workspace-simple",
-        "lockfileVersion": 2,
-        "requires": true,
-        "packages": {
-          "": {
-            "name": "workspace-simple",
-            "workspaces": {
-              "packages": [
-                "a",
-                "b"
+        name: 'workspace-simple',
+        lockfileVersion: 2,
+        requires: true,
+        packages: {
+          '': {
+            name: 'workspace-simple',
+            workspaces: {
+              packages: [
+                'a',
+                'b'
               ]
             }
           },
-          "a": {
-            "name": "a",
-            "version": "1.0.0",
-            "dependencies": {
-              "b": "^1.0.0"
+          a: {
+            name: 'a',
+            version: '1.0.0',
+            dependencies: {
+              b: '^1.0.0'
             }
           },
-          "b": {
-            "name": "b",
-            "version": "1.0.0"
+          b: {
+            name: 'b',
+            version: '1.0.0'
           },
-          "node_modules/a": {
-            "resolved": "a",
-            "link": true
+          'node_modules/a': {
+            resolved: 'a',
+            link: true
           },
-          "node_modules/b": {
-            "resolved": "b",
-            "link": true
+          'node_modules/b': {
+            resolved: 'b',
+            link: true
           }
         },
-        "dependencies": {
-          "a": {
-            "version": "file:a"
+        dependencies: {
+          a: {
+            version: 'file:a'
           },
-          "b": {
-            "version": "file:b"
+          b: {
+            version: 'file:b'
           }
         }
       }
@@ -126,20 +124,20 @@ test('no cwd provided', t => {
 
   mapWorkspaces.virtual({
     lockfile: {
-      "name": "workspace-simple",
-      "packages": {
-        "": {
-          "name": "workspace-simple",
-          "workspaces": {
-            "packages": [
-              "a",
-              "b"
+      name: 'workspace-simple',
+      packages: {
+        '': {
+          name: 'workspace-simple',
+          workspaces: {
+            packages: [
+              'a',
+              'b'
             ]
           }
         },
-        "a": {
-          "name": "a",
-          "version": "1.0.0"
+        a: {
+          name: 'a',
+          version: '1.0.0'
         }
       }
     }
@@ -152,33 +150,33 @@ test('should ignore nested node_modules', t => {
     mapWorkspaces.virtual({
       cwd,
       lockfile: {
-        "name": "workspace-ignore-nm",
-        "lockfileVersion": 2,
-        "requires": true,
-        "packages": {
-          "": {
-            "name": "workspace-ignore-nm",
-            "workspaces": {
-              "packages": [
-                "packages/**"
+        name: 'workspace-ignore-nm',
+        lockfileVersion: 2,
+        requires: true,
+        packages: {
+          '': {
+            name: 'workspace-ignore-nm',
+            workspaces: {
+              packages: [
+                'packages/**'
               ]
             }
           },
-          "node_modules/a": {
-            "resolved": "packages/a",
-            "link": true
+          'node_modules/a': {
+            resolved: 'packages/a',
+            link: true
           },
-          "packages/a": {
-            "name": "a",
-            "version": "1.0.0"
+          'packages/a': {
+            name: 'a',
+            version: '1.0.0'
           },
-          "packages/a/node_modules/not-a-workspace": {
-            "name": "not-a-workspace"
+          'packages/a/node_modules/not-a-workspace': {
+            name: 'not-a-workspace'
           }
         },
-        "dependencies": {
-          "a": {
-            "version": "file:packages/a"
+        dependencies: {
+          a: {
+            version: 'file:packages/a'
           }
         }
       }
@@ -194,65 +192,65 @@ test('transitive dependencies', t => {
     mapWorkspaces.virtual({
       cwd,
       lockfile: {
-        "name": "workspaces-transitive-deps",
-        "version": "1.0.0",
-        "lockfileVersion": 2,
-        "requires": true,
-        "packages": {
-          "": {
-            "name": "workspaces-transitive-deps",
-            "version": "1.0.0",
-            "workspaces": [
-              "packages/**"
+        name: 'workspaces-transitive-deps',
+        version: '1.0.0',
+        lockfileVersion: 2,
+        requires: true,
+        packages: {
+          '': {
+            name: 'workspaces-transitive-deps',
+            version: '1.0.0',
+            workspaces: [
+              'packages/**'
             ]
           },
-          "node_modules/a": {
-            "resolved": "packages/a",
-            "link": true
+          'node_modules/a': {
+            resolved: 'packages/a',
+            link: true
           },
-          "node_modules/once": {
-            "name": "once",
-            "version": "1.4.0",
-            "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
-            "integrity": "sha1-WDsap3WWHUsROsF9nFC6753Xa9E=",
-            "dev": true,
-            "dependencies": {
-              "wrappy": "1"
+          'node_modules/once': {
+            name: 'once',
+            version: '1.4.0',
+            resolved: 'https://registry.npmjs.org/once/-/once-1.4.0.tgz',
+            integrity: 'sha1-WDsap3WWHUsROsF9nFC6753Xa9E=',
+            dev: true,
+            dependencies: {
+              wrappy: '1'
             }
           },
-          "node_modules/wrappy": {
-            "name": "wrappy",
-            "version": "1.0.2",
-            "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
-            "integrity": "sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=",
-            "dev": true
+          'node_modules/wrappy': {
+            name: 'wrappy',
+            version: '1.0.2',
+            resolved: 'https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz',
+            integrity: 'sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=',
+            dev: true
           },
-          "packages/a": {
-            "name": "a",
-            "version": "1.0.0",
-            "devDependencies": {
-              "once": "^1.4.0"
+          'packages/a': {
+            name: 'a',
+            version: '1.0.0',
+            devDependencies: {
+              once: '^1.4.0'
             }
           }
         },
-        "dependencies": {
-          "a": {
-            "version": "file:packages/a"
+        dependencies: {
+          a: {
+            version: 'file:packages/a'
           },
-          "once": {
-            "version": "1.4.0",
-            "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
-            "integrity": "sha1-WDsap3WWHUsROsF9nFC6753Xa9E=",
-            "dev": true,
-            "requires": {
-              "wrappy": "1"
+          once: {
+            version: '1.4.0',
+            resolved: 'https://registry.npmjs.org/once/-/once-1.4.0.tgz',
+            integrity: 'sha1-WDsap3WWHUsROsF9nFC6753Xa9E=',
+            dev: true,
+            requires: {
+              wrappy: '1'
             }
           },
-          "wrappy": {
-            "version": "1.0.2",
-            "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
-            "integrity": "sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=",
-            "dev": true
+          wrappy: {
+            version: '1.0.2',
+            resolved: 'https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz',
+            integrity: 'sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=',
+            dev: true
           }
         }
       }
@@ -268,38 +266,38 @@ test('negate globs in workspaces config', t => {
     mapWorkspaces.virtual({
       cwd,
       lockfile: {
-        "name": "negate-glob-example",
-        "lockfileVersion": 2,
-        "requires": true,
-        "packages": {
-          "": {
-            "name": "negate-glob-example",
-            "workspaces": {
-              "packages": [
-                "packages/*",
-                "!packages/b"
+        name: 'negate-glob-example',
+        lockfileVersion: 2,
+        requires: true,
+        packages: {
+          '': {
+            name: 'negate-glob-example',
+            workspaces: {
+              packages: [
+                'packages/*',
+                '!packages/b'
               ]
             }
           },
-          "packages/a": {
-            "name": "a",
-            "version": "1.0.0"
+          'packages/a': {
+            name: 'a',
+            version: '1.0.0'
           },
-          "packages/b": {
-            "name": "b",
-            "version": "1.0.0"
+          'packages/b': {
+            name: 'b',
+            version: '1.0.0'
           },
-          "node_modules/a": {
-            "resolved": "packages/a",
-            "link": true
+          'node_modules/a': {
+            resolved: 'packages/a',
+            link: true
           }
         },
-        "dependencies": {
-          "a": {
-            "version": "file:packages/a"
+        dependencies: {
+          a: {
+            version: 'file:packages/a'
           },
-          "b": {
-            "version": "file:packages/b"
+          b: {
+            version: 'file:packages/b'
           }
         }
       }
@@ -315,38 +313,38 @@ test('double-negated', t => {
     mapWorkspaces.virtual({
       cwd,
       lockfile: {
-        "name": "negate-glob-example",
-        "lockfileVersion": 2,
-        "requires": true,
-        "packages": {
-          "": {
-            "name": "negate-glob-example",
-            "workspaces": {
-              "packages": [
-                "packages/*",
-                "!!packages/b"
+        name: 'negate-glob-example',
+        lockfileVersion: 2,
+        requires: true,
+        packages: {
+          '': {
+            name: 'negate-glob-example',
+            workspaces: {
+              packages: [
+                'packages/*',
+                '!!packages/b'
               ]
             }
           },
-          "packages/a": {
-            "name": "a",
-            "version": "1.0.0"
+          'packages/a': {
+            name: 'a',
+            version: '1.0.0'
           },
-          "packages/b": {
-            "name": "b",
-            "version": "1.0.0"
+          'packages/b': {
+            name: 'b',
+            version: '1.0.0'
           },
-          "node_modules/a": {
-            "resolved": "packages/a",
-            "link": true
+          'node_modules/a': {
+            resolved: 'packages/a',
+            link: true
           }
         },
-        "dependencies": {
-          "a": {
-            "version": "file:packages/a"
+        dependencies: {
+          a: {
+            version: 'file:packages/a'
           },
-          "b": {
-            "version": "file:packages/b"
+          b: {
+            version: 'file:packages/b'
           }
         }
       }
@@ -362,38 +360,38 @@ test('triple-negated', t => {
     mapWorkspaces.virtual({
       cwd,
       lockfile: {
-        "name": "negate-glob-example",
-        "lockfileVersion": 2,
-        "requires": true,
-        "packages": {
-          "": {
-            "name": "negate-glob-example",
-            "workspaces": {
-              "packages": [
-                "packages/*",
-                "!!!packages/b"
+        name: 'negate-glob-example',
+        lockfileVersion: 2,
+        requires: true,
+        packages: {
+          '': {
+            name: 'negate-glob-example',
+            workspaces: {
+              packages: [
+                'packages/*',
+                '!!!packages/b'
               ]
             }
           },
-          "packages/a": {
-            "name": "a",
-            "version": "1.0.0"
+          'packages/a': {
+            name: 'a',
+            version: '1.0.0'
           },
-          "packages/b": {
-            "name": "b",
-            "version": "1.0.0"
+          'packages/b': {
+            name: 'b',
+            version: '1.0.0'
           },
-          "node_modules/a": {
-            "resolved": "packages/a",
-            "link": true
+          'node_modules/a': {
+            resolved: 'packages/a',
+            link: true
           }
         },
-        "dependencies": {
-          "a": {
-            "version": "file:packages/a"
+        dependencies: {
+          a: {
+            version: 'file:packages/a'
           },
-          "b": {
-            "version": "file:packages/b"
+          b: {
+            version: 'file:packages/b'
           }
         }
       }
@@ -409,39 +407,39 @@ test('matched then negated then match again', t => {
     mapWorkspaces.virtual({
       cwd,
       lockfile: {
-        "name": "negate-glob-example",
-        "lockfileVersion": 2,
-        "requires": true,
-        "packages": {
-          "": {
-            "name": "negate-glob-example",
-            "workspaces": {
-              "packages": [
-                "packages/*",
-                "!packages/b",
-                "packages/b"
+        name: 'negate-glob-example',
+        lockfileVersion: 2,
+        requires: true,
+        packages: {
+          '': {
+            name: 'negate-glob-example',
+            workspaces: {
+              packages: [
+                'packages/*',
+                '!packages/b',
+                'packages/b'
               ]
             }
           },
-          "packages/a": {
-            "name": "a",
-            "version": "1.0.0"
+          'packages/a': {
+            name: 'a',
+            version: '1.0.0'
           },
-          "packages/b": {
-            "name": "b",
-            "version": "1.0.0"
+          'packages/b': {
+            name: 'b',
+            version: '1.0.0'
           },
-          "node_modules/a": {
-            "resolved": "packages/a",
-            "link": true
+          'node_modules/a': {
+            resolved: 'packages/a',
+            link: true
           }
         },
-        "dependencies": {
-          "a": {
-            "version": "file:packages/a"
+        dependencies: {
+          a: {
+            version: 'file:packages/a'
           },
-          "b": {
-            "version": "file:packages/b"
+          b: {
+            version: 'file:packages/b'
           }
         }
       }
@@ -457,40 +455,40 @@ test('matched then negated then match again then negate again', t => {
     mapWorkspaces.virtual({
       cwd,
       lockfile: {
-        "name": "negate-glob-example",
-        "lockfileVersion": 2,
-        "requires": true,
-        "packages": {
-          "": {
-            "name": "negate-glob-example",
-            "workspaces": {
-              "packages": [
-                "packages/**",
-                "!packages/foo",
-                "packages/foo/*",
-                "!packages/foo/b",
+        name: 'negate-glob-example',
+        lockfileVersion: 2,
+        requires: true,
+        packages: {
+          '': {
+            name: 'negate-glob-example',
+            workspaces: {
+              packages: [
+                'packages/**',
+                '!packages/foo',
+                'packages/foo/*',
+                '!packages/foo/b'
               ]
             }
           },
-          "packages/a": {
-            "name": "a",
-            "version": "1.0.0"
+          'packages/a': {
+            name: 'a',
+            version: '1.0.0'
           },
-          "packages/foo/b": {
-            "name": "b",
-            "version": "1.0.0"
+          'packages/foo/b': {
+            name: 'b',
+            version: '1.0.0'
           },
-          "node_modules/a": {
-            "resolved": "packages/a",
-            "link": true
+          'node_modules/a': {
+            resolved: 'packages/a',
+            link: true
           }
         },
-        "dependencies": {
-          "a": {
-            "version": "file:packages/a"
+        dependencies: {
+          a: {
+            version: 'file:packages/a'
           },
-          "b": {
-            "version": "file:packages/foo/b"
+          b: {
+            version: 'file:packages/foo/b'
           }
         }
       }
@@ -499,4 +497,3 @@ test('matched then negated then match again then negate again', t => {
   )
   t.end()
 })
-

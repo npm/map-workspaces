@@ -38,7 +38,7 @@ function getPatterns (workspaces) {
 
   return [
     ...appendNegatedPatterns(workspacesDeclaration),
-    { pattern: '**/node_modules/**', negate: true },
+    { pattern: '**/node_modules/**', negate: true }
   ]
 }
 
@@ -47,8 +47,8 @@ function isEmpty (patterns) {
 }
 
 function getPackageName (pkg, pathname) {
-    const { name } = pkg
-    return name || getName(pathname)
+  const { name } = pkg
+  return name || getName(pathname)
 }
 
 // make sure glob pattern only matches folders
@@ -127,7 +127,7 @@ async function mapWorkspaces (opts = {}) {
 
       try {
         pkg = await rpj(packageJsonPathname)
-      } catch(err) {
+      } catch (err) {
         if (err.code === 'ENOENT') {
           continue
         } else {

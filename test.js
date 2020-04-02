@@ -214,7 +214,7 @@ test('invalid packages declaration', async t => {
       pkg: {
         workspaces: 0
       }
-    }),
+    })
   ]
 
   for (const i of invalid) {
@@ -248,7 +248,7 @@ test('no cwd provided', t => {
       t.ok(map.get('a').endsWith('packages/a'), 'value is pkg pathname')
       t.end()
     })`],
-    { cwd })
+  { cwd })
   t.end()
 })
 
@@ -570,7 +570,7 @@ test('multiple negate patterns', t => {
           '!foo/**',
           'foo/baz/*',
           '!foo/baz/e',
-          '!packages/a',
+          '!packages/a'
         ]
       }
     }),
@@ -596,7 +596,7 @@ test('try to declare node_modules', t => {
       cwd,
       pkg: {
         workspaces: [
-          'foo/bar/node_modules/b',
+          'foo/bar/node_modules/b'
         ]
       }
     }),
