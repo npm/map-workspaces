@@ -22,16 +22,22 @@ Map {
 }
 `
 
-exports[`test.js TAP invalid packages declaration > should return an empty map 1`] = `
-Map {}
-`
-
 exports[`test.js TAP missing pkg info > should return an empty map 1`] = `
 Array [
   Map {},
   Map {},
   Map {},
 ]
+`
+
+exports[`test.js TAP multiple negate patterns > should not include any negated pattern 1`] = `
+Map {}
+`
+
+exports[`test.js TAP negate pattern > should not include negated patterns 1`] = `
+Map {
+  "a" => "{CWD}/test-negate-pattern/packages/a",
+}
 `
 
 exports[`test.js TAP nested glob lookups > should return a valid map 1`] = `
@@ -48,12 +54,6 @@ Map {
 }
 `
 
-exports[`test.js TAP no cwd provided > should return valid result using cwd value 1`] = `
-Map {
-  "a" => "{CWD}/test-no-cwd-provided/packages/a",
-}
-`
-
 exports[`test.js TAP no package name > should return map containing valid names as keys 1`] = `
 Map {
   "@foo/bar" => "{CWD}/test-no-package-name/packages/@foo/bar",
@@ -67,6 +67,10 @@ Map {
   "a" => "{CWD}/test-simple-workspaces-config/a",
   "b" => "{CWD}/test-simple-workspaces-config/b",
 }
+`
+
+exports[`test.js TAP try to declare node_modules > should not include declared packages within node_modules 1`] = `
+Map {}
 `
 
 exports[`test.js TAP use of / at end of defined globs > should return a valid map 1`] = `

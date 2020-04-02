@@ -27,18 +27,23 @@ function appendNegatedPatterns (patterns) {
 }
 
 function getPatterns (workspaces) {
+  const workspacesDeclaration =
+    Array.isArray(workspaces.packages)
+      ? workspaces.packages
+      : workspaces
+
+  if (!Array.isArray(workspacesDeclaration)) {
+    throw getWorkspacesArrayError()
+  }
+
   return [
-    ...appendNegatedPatterns(
-      Array.isArray(workspaces.packages)
-        ? workspaces.packages
-        : workspaces
-    ),
+    ...appendNegatedPatterns(workspacesDeclaration),
     { pattern: '**/node_modules/**', negate: true },
   ]
 }
 
 function isEmpty (patterns) {
- return !Array.isArray(patterns) || !patterns.length
+  return patterns.length < 2
 }
 
 function getPackageName (pkg, pathname) {
@@ -46,35 +51,24 @@ function getPackageName (pkg, pathname) {
     return name || getName(pathname)
 }
 
-function concatResults (globs) {
-  return globs.reduce((res, glob) => res.concat(glob), [])
-}
-
+// make sure glob pattern only matches folders
 function getGlobPattern (pattern) {
   return pattern.endsWith('/')
     ? pattern
     : `${pattern}/`
 }
 
-function getPackages (pkgPathnames) {
-  const promisedPackageJsons = pkgPathnames.map(
-    packagePathname => rpj(packagePathname)
-      .catch(err => {
-        if (err.code === 'ENOENT') {
-          return null
-        } else {
-          throw err
-        }
-      })
-  )
-
-  return Promise.all(promisedPackageJsons)
-}
-
 function getDuplicateWorkspaceError () {
   return Object.assign(
     new Error('must not have multiple workspaces with the same name'),
     { code: 'EDUPLICATEWORKSPACE' }
+  )
+}
+
+function getWorkspacesArrayError () {
+  return Object.assign(
+    new TypeError('workspaces config expects an Array'),
+    { code: 'EWORKSPACESCONFIG' }
   )
 }
 
@@ -92,6 +86,10 @@ function getMissingLockfileError () {
   )
 }
 
+function reverseResultMap (map) {
+  return new Map(Array.from(map, item => item.reverse()))
+}
+
 async function mapWorkspaces (opts = {}) {
   if (!opts || !opts.pkg) {
     throw getMissingPkgError()
@@ -100,53 +98,59 @@ async function mapWorkspaces (opts = {}) {
   const { workspaces = [] } = opts.pkg
   const patterns = getPatterns(workspaces)
   const results = new Map()
+  const seen = new Set()
 
   if (isEmpty(patterns)) {
     return results
   }
 
-  const globOpts = {
+  const getGlobOpts = () => ({
     ...opts,
     ignore: [
       ...opts.ignore || [],
       ...['**/node_modules/**']
     ]
-  }
-  const getPathnames = () => Promise.all(
-    patterns.map(pattern => pGlob(getGlobPattern(pattern), globOpts))
-  )
+  })
 
   const getPackagePathname = pathname => {
-    const cwd = opts.cwd ? opts.cwd : process.cwd()
+    const cwd = opts.cwd ? opts.cwd : /* istanbul ignore next */process.cwd()
     return path.join(cwd, pathname, 'package.json')
   }
 
-  const retrievePackagePathnames = pathnames =>
-    pathnames.map(
-      pathname => getPackagePathname(pathname)
-    )
+  for (const item of patterns) {
+    const matches = await pGlob(getGlobPattern(item.pattern), getGlobOpts())
 
-  const pkgPathnames = await getPathnames()
-    .then(concatResults)
-    .then(retrievePackagePathnames)
+    for (const match of matches) {
+      let pkg
+      const packageJsonPathname = getPackagePathname(match)
+      const packagePathname = path.dirname(getPackagePathname(match))
 
-  const packageJsons = await getPackages(pkgPathnames)
-  for (const index of pkgPathnames.keys()) {
-    if (!packageJsons[index]) {
-      continue
+      try {
+        pkg = await rpj(packageJsonPathname)
+      } catch(err) {
+        if (err.code === 'ENOENT') {
+          continue
+        } else {
+          throw err
+        }
+      }
+
+      const name = getPackageName(pkg, packagePathname)
+
+      if (item.negate) {
+        results.delete(packagePathname, name)
+      } else {
+        if (seen.has(name)) {
+          throw getDuplicateWorkspaceError()
+        }
+
+        seen.add(name)
+        results.set(packagePathname, name)
+      }
     }
-
-    const packagePathname = path.dirname(pkgPathnames[index])
-    const name = getPackageName(packageJsons[index], packagePathname)
-
-    if (results.get(name)) {
-      throw getDuplicateWorkspaceError()
-    }
-
-    results.set(name, packagePathname)
   }
 
-  return results
+  return reverseResultMap(results)
 }
 
 mapWorkspaces.virtual = function (opts = {}) {
@@ -159,10 +163,10 @@ mapWorkspaces.virtual = function (opts = {}) {
   const patterns = getPatterns(workspaces)
 
   // uses a pathname-keyed map in order to negate the exact items
-  const pathnames = new Map()
+  const results = new Map()
 
   if (isEmpty(patterns)) {
-    return pathnames
+    return results
   }
 
   const getPackagePathname = pathname => {
@@ -181,16 +185,16 @@ mapWorkspaces.virtual = function (opts = {}) {
         const name = getPackageName(packages[packageKey], packagePathname)
 
         if (item.negate) {
-          pathnames.delete(packagePathname)
+          results.delete(packagePathname)
         } else {
-          pathnames.set(packagePathname, name)
+          results.set(packagePathname, name)
         }
       }
     }
   }
 
   // Invert pathname-keyed to a proper name-to-pathnames Map
-  return new Map(Array.from(pathnames, item => item.reverse()))
+  return reverseResultMap(results)
 }
 
 module.exports = mapWorkspaces

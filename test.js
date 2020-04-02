@@ -165,7 +165,7 @@ test('empty packages declaration', t => {
   )
 })
 
-test('invalid packages declaration', t => {
+test('invalid packages declaration', async t => {
   const cwd = t.testdir({
     packages: {
       a: {
@@ -174,8 +174,22 @@ test('invalid packages declaration', t => {
     }
   })
 
-  return t.resolveMatchSnapshot(
-    mapWorkspaces({
+  const invalid = [
+    () => mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: 'packages/*'
+        }
+      }
+    }),
+    () => mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: 'packages/*'
+      }
+    }),
+    () => mapWorkspaces({
       cwd,
       pkg: {
         workspaces: {
@@ -183,8 +197,35 @@ test('invalid packages declaration', t => {
         }
       }
     }),
-    'should return an empty map'
-  )
+    () => mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: ''
+      }
+    }),
+    () => mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: NaN
+      }
+    }),
+    () => mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: 0
+      }
+    }),
+  ]
+
+  for (const i of invalid) {
+    await t.rejects(
+      i(),
+      { code: 'EWORKSPACESCONFIG' },
+      'should throw workspaces config error'
+    )
+  }
+
+  t.end()
 })
 
 test('no cwd provided', t => {
@@ -196,29 +237,19 @@ test('no cwd provided', t => {
     }
   })
 
-  const mapW = requireInject('./index.js', {
-    glob: (pattern, opts, cb) => {
-      cb(null, 'packages/a')
-    }
-  })
-
-  const processCwd = process.cwd
-  process.cwd = () => {
-    process.cwd = processCwd
-    t.ok('should default to process.cwd()')
-    return cwd
-  }
-
-  return t.resolveMatchSnapshot(
-    mapW({
-      pkg: {
-        workspaces: [
-          'packages/*'
-        ]
-      }
-    }),
-    'should return valid result using cwd value'
-  )
+  t.spawn(process.execPath, ['-e', `require('tap')
+    .test('uses process.cwd', async t => {
+      const map = await require('../index.js')({
+        pkg: {
+          workspaces: [ 'packages/*' ]
+        }
+      })
+      t.ok(map.has('a'), 'has package name key')
+      t.ok(map.get('a').endsWith('packages/a'), 'value is pkg pathname')
+      t.end()
+    })`],
+    { cwd })
+  t.end()
 })
 
 test('no package name', t => {
@@ -456,5 +487,119 @@ test('ignore option', t => {
       }
     }),
     'should ignore things from opts.ignore'
+  )
+})
+
+test('negate pattern', t => {
+  const cwd = t.testdir({
+    foo: {
+      bar: {
+        baz: {
+          e: {
+            'package.json': '{ "name": "e" }'
+          }
+        },
+        node_modules: {
+          b: {
+            'package.json': '{ "name": "b" }'
+          }
+        }
+      }
+    },
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }',
+        node_modules: {
+          c: {
+            'package.json': '{ "name": "c" }'
+          }
+        }
+      }
+    }
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages/*',
+          'foo/**',
+          '!**/baz/**'
+        ]
+      }
+    }),
+    'should not include negated patterns'
+  )
+})
+
+test('multiple negate patterns', t => {
+  const cwd = t.testdir({
+    foo: {
+      bar: {
+        baz: {
+          e: {
+            'package.json': '{ "name": "e" }'
+          }
+        },
+        node_modules: {
+          b: {
+            'package.json': '{ "name": "b" }'
+          }
+        }
+      }
+    },
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }',
+        node_modules: {
+          c: {
+            'package.json': '{ "name": "c" }'
+          }
+        }
+      }
+    }
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages/*',
+          '!foo/**',
+          'foo/baz/*',
+          '!foo/baz/e',
+          '!packages/a',
+        ]
+      }
+    }),
+    'should not include any negated pattern'
+  )
+})
+
+test('try to declare node_modules', t => {
+  const cwd = t.testdir({
+    foo: {
+      bar: {
+        node_modules: {
+          b: {
+            'package.json': '{ "name": "b" }'
+          }
+        }
+      }
+    }
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'foo/bar/node_modules/b',
+        ]
+      }
+    }),
+    'should not include declared packages within node_modules'
   )
 })
