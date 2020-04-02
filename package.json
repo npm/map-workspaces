@@ -27,7 +27,7 @@
     "lint": "standard",
     "test": "tap test*.js",
     "snap": "tap test*.js",
-    "preversion": "npm test*.js",
+    "preversion": "npm test",
     "postversion": "npm publish",
     "prepublishOnly": "git push origin --follow-tags"
   },
