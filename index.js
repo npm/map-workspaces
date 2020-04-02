@@ -33,7 +33,10 @@ function getPatterns (workspaces) {
       : workspaces
 
   if (!Array.isArray(workspacesDeclaration)) {
-    throw getWorkspacesArrayError()
+    throw getError({
+      message: 'workspaces config expects an Array',
+      code: 'EWORKSPACESCONFIG'
+    })
   }
 
   return [
@@ -58,32 +61,8 @@ function getGlobPattern (pattern) {
     : `${pattern}/`
 }
 
-function getDuplicateWorkspaceError () {
-  return Object.assign(
-    new Error('must not have multiple workspaces with the same name'),
-    { code: 'EDUPLICATEWORKSPACE' }
-  )
-}
-
-function getWorkspacesArrayError () {
-  return Object.assign(
-    new TypeError('workspaces config expects an Array'),
-    { code: 'EWORKSPACESCONFIG' }
-  )
-}
-
-function getMissingPkgError () {
-  return Object.assign(
-    new TypeError('mapWorkspaces missing pkg info'),
-    { code: 'EMAPWORKSPACESPKG' }
-  )
-}
-
-function getMissingLockfileError () {
-  return Object.assign(
-    new TypeError('mapWorkspaces.virtual missing lockfile info'),
-    { code: 'EMAPWORKSPACESLOCKFILE' }
-  )
+function getError ({ Type = TypeError, message, code }) {
+  return Object.assign(new Type(message), { code })
 }
 
 function reverseResultMap (map) {
@@ -92,7 +71,10 @@ function reverseResultMap (map) {
 
 async function mapWorkspaces (opts = {}) {
   if (!opts || !opts.pkg) {
-    throw getMissingPkgError()
+    throw getError({
+      message: 'mapWorkspaces missing pkg info',
+      code: 'EMAPWORKSPACESPKG'
+    })
   }
 
   const { workspaces = [] } = opts.pkg
@@ -141,7 +123,11 @@ async function mapWorkspaces (opts = {}) {
         results.delete(packagePathname, name)
       } else {
         if (seen.has(name)) {
-          throw getDuplicateWorkspaceError()
+          throw getError({
+            Type: Error,
+            message: 'must not have multiple workspaces with the same name',
+            code: 'EDUPLICATEWORKSPACE'
+          })
         }
 
         seen.add(name)
@@ -155,7 +141,10 @@ async function mapWorkspaces (opts = {}) {
 
 mapWorkspaces.virtual = function (opts = {}) {
   if (!opts || !opts.lockfile) {
-    throw getMissingLockfileError()
+    throw getError({
+      message: 'mapWorkspaces.virtual missing lockfile info',
+      code: 'EMAPWORKSPACESLOCKFILE'
+    })
   }
 
   const { packages = {} } = opts.lockfile
