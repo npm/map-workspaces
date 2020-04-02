@@ -7,23 +7,27 @@
   "description": "Retrieves a name:pathname Map for a given workspaces config",
   "repository": "https://github.com/npm/map-workspaces",
   "keywords": [
-    "init",
-    "oss",
     "npm",
+    "npmcli",
     "libnpm",
     "cli",
-    "workspaces"
+    "workspaces",
+    "map-workspaces"
   ],
   "author": "npm Inc. <support@npmjs.com>",
   "contributors": [
-    "Ruy Adorno (https://ruyadorno.com)"
+    {
+      "name": "Ruy Adorno",
+      "url": "https://ruyadorno.com",
+      "twitter": "ruyadorno"
+    }
   ],
   "license": "ISC",
   "scripts": {
     "lint": "standard",
-    "test": "tap test*",
-    "snap": "tap test*",
-    "preversion": "npm test*",
+    "test": "tap test*.js",
+    "snap": "tap test*.js",
+    "preversion": "npm test*.js",
     "postversion": "npm publish",
     "prepublishOnly": "git push origin --follow-tags"
   },
