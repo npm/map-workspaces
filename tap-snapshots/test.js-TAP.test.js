@@ -75,6 +75,13 @@ Map {
 }
 `
 
+exports[`test.js TAP simple workspaces config with scoped pkg > should return a valid map 1`] = `
+Map {
+  "@ruyadorno/scoped-a" => "{CWD}/test-simple-workspaces-config-with-scoped-pkg/packages/a",
+  "@ruyadorno/scoped-b" => "{CWD}/test-simple-workspaces-config-with-scoped-pkg/packages/b",
+}
+`
+
 exports[`test.js TAP triple negate patterns > should exclude thrice-negated items from resulting map 1`] = `
 Map {}
 `

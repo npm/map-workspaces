@@ -41,6 +41,33 @@ test('simple workspaces config', t => {
   )
 })
 
+test('simple workspaces config with scoped pkg', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "@ruyadorno/scoped-a" }'
+      },
+      b: {
+        'package.json': '{ "name": "@ruyadorno/scoped-b" }'
+      }
+    }
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'packages/*'
+          ]
+        }
+      }
+    }),
+    'should return a valid map'
+  )
+})
+
 test('missing pkg info', t => {
   const cwd = t.testdir({
     a: {
