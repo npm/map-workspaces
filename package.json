@@ -4,6 +4,9 @@
   "files": [
     "index.js"
   ],
+  "engines": {
+    "node": ">=10"
+  },
   "description": "Retrieves a name:pathname Map for a given workspaces config",
   "repository": "https://github.com/npm/map-workspaces",
   "keywords": [
