@@ -126,14 +126,6 @@ async function mapWorkspaces (opts = {}) {
       if (item.negate) {
         results.delete(packagePathname, name)
       } else {
-        if (seen.has(name)) {
-          throw getError({
-            Type: Error,
-            message: 'must not have multiple workspaces with the same name',
-            code: 'EDUPLICATEWORKSPACE'
-          })
-        }
-
         seen.add(name)
         results.set(packagePathname, name)
       }
