@@ -255,7 +255,7 @@ test('invalid packages declaration', async t => {
   t.end()
 })
 
-test('no cwd provided', t => {
+test('no cwd provided', async t => {
   const cwd = t.testdir({
     packages: {
       a: {
@@ -264,19 +264,19 @@ test('no cwd provided', t => {
     }
   })
 
-  t.spawn(process.execPath, ['-e', `require('tap')
-    .test('uses process.cwd', async t => {
-      const map = await require('../index.js')({
-        pkg: {
-          workspaces: [ 'packages/*' ]
-        }
-      })
-      t.ok(map.has('a'), 'has package name key')
-      t.ok(map.get('a').endsWith('packages/a'), 'value is pkg pathname')
-      t.end()
-    })`],
-  { cwd })
-  t.end()
+  const _cwd = process.cwd()
+  process.chdir(cwd)
+  t.teardown(() => {
+    process.chdir(_cwd)
+  })
+
+  const map = await mapWorkspaces({
+    pkg: {
+      workspaces: ['packages/*']
+    }
+  })
+  t.ok(map.has('a'), 'has package name key')
+  t.matchSnapshot(map.get('a'), 'value is pkg pathname')
 })
 
 test('no package name', t => {
