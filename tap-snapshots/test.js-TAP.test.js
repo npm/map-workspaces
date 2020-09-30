@@ -11,6 +11,13 @@ Map {
 }
 `
 
+exports[`test.js TAP duplicated workspaces glob pattern > should allow dup glob-declared packages that resolve to same pathname 1`] = `
+Map {
+  "a" => "{CWD}/test-duplicated-workspaces-glob-pattern/packages/a",
+  "b" => "{CWD}/test-duplicated-workspaces-glob-pattern/packages/nested/b",
+}
+`
+
 exports[`test.js TAP empty folders > should ignore empty folders 1`] = `
 Map {
   "a" => "{CWD}/test-empty-folders/a",
