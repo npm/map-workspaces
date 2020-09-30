@@ -170,6 +170,67 @@ test('duplicated workspaces config', t => {
   )
 })
 
+test('duplicated workspaces globstar pattern', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }'
+      },
+      nested: {
+        b: {
+          'package.json': '{ "name": "a" }' // name is same as packages/a
+        }
+      }
+    }
+  })
+
+  return t.rejects(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'packages/**',
+            'packages/nested/**'
+          ]
+        }
+      }
+    }),
+    { code: 'EDUPLICATEWORKSPACE' },
+    'should throw an error'
+  )
+})
+
+test('duplicated workspaces glob pattern', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }'
+      },
+      nested: {
+        b: {
+          'package.json': '{ "name": "b" }'
+        }
+      }
+    }
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'packages/**',
+            'packages/nested/**'
+          ]
+        }
+      }
+    }),
+    'should allow dup glob-declared packages that resolve to same pathname'
+  )
+})
+
 test('empty packages declaration', t => {
   const cwd = t.testdir({
     packages: {
