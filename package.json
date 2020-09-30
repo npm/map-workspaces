@@ -45,8 +45,8 @@
   },
   "devDependencies": {
     "require-inject": "^1.4.4",
-    "standard": "^14.3.1",
-    "tap": "^14.10.7"
+    "standard": "^14.3.4",
+    "tap": "^14.10.8"
   },
   "dependencies": {
     "@npmcli/name-from-folder": "^1.0.1",
