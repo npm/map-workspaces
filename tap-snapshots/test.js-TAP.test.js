@@ -60,6 +60,10 @@ Map {
 }
 `
 
+exports[`test.js TAP no cwd provided > value is pkg pathname 1`] = `
+{CWD}/packages/a
+`
+
 exports[`test.js TAP no package name > should return map containing valid names as keys 1`] = `
 Map {
   "@foo/bar" => "{CWD}/test-no-package-name/packages/@foo/bar",
