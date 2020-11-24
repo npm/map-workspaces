@@ -535,6 +535,43 @@ test('nested node_modules', t => {
   )
 })
 
+test('root declared within workspaces', t => {
+  const cwd = t.testdir({
+    node_modules: {
+      b: {
+        'package.json': '{ "name": "b" }'
+      }
+    },
+    packages: {
+      a: {
+        'package.json': JSON.stringify({
+          name: 'a',
+          dependencies: {
+            b: '*'
+          }
+        })
+      }
+    },
+    'package.json': JSON.stringify({
+      name: 'root-workspace',
+      version: '1.0.0'
+    })
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages/*',
+          '.'
+        ]
+      }
+    }),
+    'should allow the root package to be declared within workspaces'
+  )
+})
+
 test('ignore option', t => {
   const cwd = t.testdir({
     foo: {

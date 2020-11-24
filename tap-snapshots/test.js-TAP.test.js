@@ -79,6 +79,13 @@ Map {
 }
 `
 
+exports[`test.js TAP root declared within workspaces > should allow the root package to be declared within workspaces 1`] = `
+Map {
+  "a" => "{CWD}/test-root-declared-within-workspaces/packages/a",
+  "root-workspace" => "{CWD}/test-root-declared-within-workspaces",
+}
+`
+
 exports[`test.js TAP simple workspaces config > should return a valid map 1`] = `
 Map {
   "a" => "{CWD}/test-simple-workspaces-config/a",
