@@ -3,7 +3,7 @@ const { test } = tap
 
 const requireInject = require('require-inject')
 
-const mapWorkspaces = require('./index.js')
+const mapWorkspaces = require('../')
 
 tap.cleanSnapshot = str => {
   const cleanPath = path => path
@@ -18,11 +18,11 @@ tap.cleanSnapshot = str => {
 test('simple workspaces config', t => {
   const cwd = t.testdir({
     a: {
-      'package.json': '{ "name": "a" }'
+      'package.json': '{ "name": "a" }',
     },
     b: {
-      'package.json': '{ "name": "b" }'
-    }
+      'package.json': '{ "name": "b" }',
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -32,10 +32,10 @@ test('simple workspaces config', t => {
         workspaces: {
           packages: [
             'a',
-            'b'
-          ]
-        }
-      }
+            'b',
+          ],
+        },
+      },
     }),
     'should return a valid map'
   )
@@ -45,12 +45,12 @@ test('simple workspaces config with scoped pkg', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "@ruyadorno/scoped-a" }'
+        'package.json': '{ "name": "@ruyadorno/scoped-a" }',
       },
       b: {
-        'package.json': '{ "name": "@ruyadorno/scoped-b" }'
-      }
-    }
+        'package.json': '{ "name": "@ruyadorno/scoped-b" }',
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -59,10 +59,10 @@ test('simple workspaces config with scoped pkg', t => {
       pkg: {
         workspaces: {
           packages: [
-            'packages/*'
-          ]
-        }
-      }
+            'packages/*',
+          ],
+        },
+      },
     }),
     'should return a valid map'
   )
@@ -71,23 +71,23 @@ test('simple workspaces config with scoped pkg', t => {
 test('missing pkg info', t => {
   const cwd = t.testdir({
     a: {
-      'package.json': '{ "name": "a" }'
-    }
+      'package.json': '{ "name": "a" }',
+    },
   })
 
   const results = Promise.all([
     mapWorkspaces({
       cwd,
-      pkg: 1
+      pkg: 1,
     }),
     mapWorkspaces({
       cwd,
-      pkg: 'foo'
+      pkg: 'foo',
     }),
     mapWorkspaces({
       cwd,
-      pkg: {}
-    })
+      pkg: {},
+    }),
   ])
   return t.resolveMatchSnapshot(results, 'should return an empty map')
 })
@@ -101,7 +101,7 @@ test('invalid options', async t => {
     () => mapWorkspaces(1),
     () => mapWorkspaces(NaN),
     () => mapWorkspaces(null),
-    () => mapWorkspaces()
+    () => mapWorkspaces(),
   ]
 
   for (const i of invalid) {
@@ -119,12 +119,12 @@ test('workspaces config using simplistic glob', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
+        'package.json': '{ "name": "a" }',
       },
       b: {
-        'package.json': '{ "name": "b" }'
-      }
-    }
+        'package.json': '{ "name": "b" }',
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -133,10 +133,10 @@ test('workspaces config using simplistic glob', t => {
       pkg: {
         workspaces: {
           packages: [
-            'packages/*'
-          ]
-        }
-      }
+            'packages/*',
+          ],
+        },
+      },
     }),
     'should return a valid map'
   )
@@ -146,12 +146,12 @@ test('duplicated workspaces config', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
+        'package.json': '{ "name": "a" }',
       },
       b: {
-        'package.json': '{ "name": "a" }'
-      }
-    }
+        'package.json': '{ "name": "a" }',
+      },
+    },
   })
 
   return t.rejects(
@@ -160,10 +160,10 @@ test('duplicated workspaces config', t => {
       pkg: {
         workspaces: {
           packages: [
-            'packages/*'
-          ]
-        }
-      }
+            'packages/*',
+          ],
+        },
+      },
     }),
     { code: 'EDUPLICATEWORKSPACE' },
     'should throw an error'
@@ -174,14 +174,14 @@ test('duplicated workspaces globstar pattern', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
+        'package.json': '{ "name": "a" }',
       },
       nested: {
         b: {
-          'package.json': '{ "name": "a" }' // name is same as packages/a
-        }
-      }
-    }
+          'package.json': '{ "name": "a" }', // name is same as packages/a
+        },
+      },
+    },
   })
 
   return t.rejects(
@@ -191,10 +191,10 @@ test('duplicated workspaces globstar pattern', t => {
         workspaces: {
           packages: [
             'packages/**',
-            'packages/nested/**'
-          ]
-        }
-      }
+            'packages/nested/**',
+          ],
+        },
+      },
     }),
     { code: 'EDUPLICATEWORKSPACE' },
     'should throw an error'
@@ -205,14 +205,14 @@ test('duplicated workspaces glob pattern', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
+        'package.json': '{ "name": "a" }',
       },
       nested: {
         b: {
-          'package.json': '{ "name": "b" }'
-        }
-      }
-    }
+          'package.json': '{ "name": "b" }',
+        },
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -222,10 +222,10 @@ test('duplicated workspaces glob pattern', t => {
         workspaces: {
           packages: [
             'packages/**',
-            'packages/nested/**'
-          ]
-        }
-      }
+            'packages/nested/**',
+          ],
+        },
+      },
     }),
     'should allow dup glob-declared packages that resolve to same pathname'
   )
@@ -235,9 +235,9 @@ test('empty packages declaration', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
-      }
-    }
+        'package.json': '{ "name": "a" }',
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -245,9 +245,9 @@ test('empty packages declaration', t => {
       cwd,
       pkg: {
         workspaces: {
-          packages: []
-        }
-      }
+          packages: [],
+        },
+      },
     }),
     'should return an empty map'
   )
@@ -257,9 +257,9 @@ test('invalid packages declaration', async t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
-      }
-    }
+        'package.json': '{ "name": "a" }',
+      },
+    },
   })
 
   const invalid = [
@@ -267,42 +267,42 @@ test('invalid packages declaration', async t => {
       cwd,
       pkg: {
         workspaces: {
-          packages: 'packages/*'
-        }
-      }
+          packages: 'packages/*',
+        },
+      },
     }),
     () => mapWorkspaces({
       cwd,
       pkg: {
-        workspaces: 'packages/*'
-      }
+        workspaces: 'packages/*',
+      },
     }),
     () => mapWorkspaces({
       cwd,
       pkg: {
         workspaces: {
-          packages: ''
-        }
-      }
+          packages: '',
+        },
+      },
     }),
     () => mapWorkspaces({
       cwd,
       pkg: {
-        workspaces: ''
-      }
+        workspaces: '',
+      },
     }),
     () => mapWorkspaces({
       cwd,
       pkg: {
-        workspaces: NaN
-      }
+        workspaces: NaN,
+      },
     }),
     () => mapWorkspaces({
       cwd,
       pkg: {
-        workspaces: 0
-      }
-    })
+        workspaces: 0,
+      },
+    }),
   ]
 
   for (const i of invalid) {
@@ -320,9 +320,9 @@ test('no cwd provided', async t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
-      }
-    }
+        'package.json': '{ "name": "a" }',
+      },
+    },
   })
 
   const _cwd = process.cwd()
@@ -333,8 +333,8 @@ test('no cwd provided', async t => {
 
   const map = await mapWorkspaces({
     pkg: {
-      workspaces: ['packages/*']
-    }
+      workspaces: ['packages/*'],
+    },
   })
   t.ok(map.has('a'), 'has package name key')
   t.matchSnapshot(map.get('a'), 'value is pkg pathname')
@@ -344,25 +344,25 @@ test('no package name', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "version": "1.0.0" }'
+        'package.json': '{ "version": "1.0.0" }',
       },
       b: {
-        'package.json': '{ "name": "", "version": "1.0.0" }'
+        'package.json': '{ "name": "", "version": "1.0.0" }',
       },
       '@foo': {
         bar: {
-          'package.json': '{ "version": "1.0.0" }'
-        }
-      }
-    }
+          'package.json': '{ "version": "1.0.0" }',
+        },
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
     mapWorkspaces({
       cwd,
       pkg: {
-        workspaces: ['packages/**']
-      }
+        workspaces: ['packages/**'],
+      },
     }),
     'should return map containing valid names as keys'
   )
@@ -371,12 +371,12 @@ test('no package name', t => {
 test('empty folders', t => {
   const cwd = t.testdir({
     a: {
-      'package.json': '{ "name": "a" }'
+      'package.json': '{ "name": "a" }',
     },
     b: {
-      'package.json': '{ "name": "b" }'
+      'package.json': '{ "name": "b" }',
     },
-    c: {}
+    c: {},
   })
 
   return t.resolveMatchSnapshot(
@@ -387,10 +387,10 @@ test('empty folders', t => {
           packages: [
             'a',
             'b',
-            'c'
-          ]
-        }
-      }
+            'c',
+          ],
+        },
+      },
     }),
     'should ignore empty folders'
   )
@@ -399,18 +399,18 @@ test('empty folders', t => {
 test('unexpected rpj errors', t => {
   const cwd = t.testdir({
     a: {
-      'package.json': '{ "name": "a" }'
+      'package.json': '{ "name": "a" }',
     },
     b: {
-      'package.json': '{ "name": "b" }'
-    }
+      'package.json': '{ "name": "b" }',
+    },
   })
 
   const err = new Error('ERR')
   err.code = 'ERR'
 
-  const mapW = requireInject('./index.js', {
-    'read-package-json-fast': () => Promise.reject(err)
+  const mapW = requireInject('../', {
+    'read-package-json-fast': () => Promise.reject(err),
   })
 
   return t.rejects(
@@ -420,10 +420,10 @@ test('unexpected rpj errors', t => {
         workspaces: {
           packages: [
             'a',
-            'b'
-          ]
-        }
-      }
+            'b',
+          ],
+        },
+      },
     }),
     err,
     'should reject with unexpected error'
@@ -434,9 +434,9 @@ test('nested glob lookups', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
-      }
-    }
+        'package.json': '{ "name": "a" }',
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -445,10 +445,10 @@ test('nested glob lookups', t => {
       pkg: {
         workspaces: {
           packages: [
-            'packages/**'
-          ]
-        }
-      }
+            'packages/**',
+          ],
+        },
+      },
     }),
     'should return a valid map'
   )
@@ -457,11 +457,11 @@ test('nested glob lookups', t => {
 test('use of / at end of defined globs', t => {
   const cwd = t.testdir({
     a: {
-      'package.json': '{ "name": "a" }'
+      'package.json': '{ "name": "a" }',
     },
     b: {
-      'package.json': '{ "name": "b" }'
-    }
+      'package.json': '{ "name": "b" }',
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -471,10 +471,10 @@ test('use of / at end of defined globs', t => {
         workspaces: {
           packages: [
             'a/',
-            'b/'
-          ]
-        }
-      }
+            'b/',
+          ],
+        },
+      },
     }),
     'should return a valid map'
   )
@@ -484,41 +484,41 @@ test('nested node_modules', t => {
   const cwd = t.testdir({
     node_modules: {
       d: {
-        'package.json': '{ "name": "d" }'
-      }
+        'package.json': '{ "name": "d" }',
+      },
     },
     foo: {
       bar: {
         node_modules: {
           f: {
-            'package.json': '{ "name": "f" }'
-          }
+            'package.json': '{ "name": "f" }',
+          },
         },
         baz: {
           e: {
-            'package.json': '{ "name": "e" }'
-          }
-        }
-      }
+            'package.json': '{ "name": "e" }',
+          },
+        },
+      },
     },
     packages: {
       node_modules: {
         g: {
-          'package.json': '{ "name": "g" }'
-        }
+          'package.json': '{ "name": "g" }',
+        },
       },
       a: {
         'package.json': '{ "name": "a" }',
         node_modules: {
           c: {
-            'package.json': '{ "name": "c" }'
-          }
-        }
+            'package.json': '{ "name": "c" }',
+          },
+        },
       },
       b: {
-        'package.json': '{ "name": "b" }'
-      }
-    }
+        'package.json': '{ "name": "b" }',
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -527,9 +527,9 @@ test('nested node_modules', t => {
       pkg: {
         workspaces: [
           'packages/*',
-          'foo/**'
-        ]
-      }
+          'foo/**',
+        ],
+      },
     }),
     'should ignore packages within node_modules'
   )
@@ -539,23 +539,23 @@ test('root declared within workspaces', t => {
   const cwd = t.testdir({
     node_modules: {
       b: {
-        'package.json': '{ "name": "b" }'
-      }
+        'package.json': '{ "name": "b" }',
+      },
     },
     packages: {
       a: {
         'package.json': JSON.stringify({
           name: 'a',
           dependencies: {
-            b: '*'
-          }
-        })
-      }
+            b: '*',
+          },
+        }),
+      },
     },
     'package.json': JSON.stringify({
       name: 'root-workspace',
-      version: '1.0.0'
-    })
+      version: '1.0.0',
+    }),
   })
 
   return t.resolveMatchSnapshot(
@@ -564,9 +564,9 @@ test('root declared within workspaces', t => {
       pkg: {
         workspaces: [
           'packages/*',
-          '.'
-        ]
-      }
+          '.',
+        ],
+      },
     }),
     'should allow the root package to be declared within workspaces'
   )
@@ -578,26 +578,26 @@ test('ignore option', t => {
       bar: {
         baz: {
           e: {
-            'package.json': '{ "name": "e" }'
-          }
+            'package.json': '{ "name": "e" }',
+          },
         },
         node_modules: {
           b: {
-            'package.json': '{ "name": "b" }'
-          }
-        }
-      }
+            'package.json': '{ "name": "b" }',
+          },
+        },
+      },
     },
     packages: {
       a: {
         'package.json': '{ "name": "a" }',
         node_modules: {
           c: {
-            'package.json': '{ "name": "c" }'
-          }
-        }
-      }
-    }
+            'package.json': '{ "name": "c" }',
+          },
+        },
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -607,9 +607,9 @@ test('ignore option', t => {
       pkg: {
         workspaces: [
           'packages/*',
-          'foo/**'
-        ]
-      }
+          'foo/**',
+        ],
+      },
     }),
     'should ignore things from opts.ignore'
   )
@@ -621,26 +621,26 @@ test('negate pattern', t => {
       bar: {
         baz: {
           e: {
-            'package.json': '{ "name": "e" }'
-          }
+            'package.json': '{ "name": "e" }',
+          },
         },
         node_modules: {
           b: {
-            'package.json': '{ "name": "b" }'
-          }
-        }
-      }
+            'package.json': '{ "name": "b" }',
+          },
+        },
+      },
     },
     packages: {
       a: {
         'package.json': '{ "name": "a" }',
         node_modules: {
           c: {
-            'package.json': '{ "name": "c" }'
-          }
-        }
-      }
-    }
+            'package.json': '{ "name": "c" }',
+          },
+        },
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -650,9 +650,9 @@ test('negate pattern', t => {
         workspaces: [
           'packages/*',
           'foo/**',
-          '!**/baz/**'
-        ]
-      }
+          '!**/baz/**',
+        ],
+      },
     }),
     'should not include negated patterns'
   )
@@ -664,26 +664,26 @@ test('multiple negate patterns', t => {
       bar: {
         baz: {
           e: {
-            'package.json': '{ "name": "e" }'
-          }
+            'package.json': '{ "name": "e" }',
+          },
         },
         node_modules: {
           b: {
-            'package.json': '{ "name": "b" }'
-          }
-        }
-      }
+            'package.json': '{ "name": "b" }',
+          },
+        },
+      },
     },
     packages: {
       a: {
         'package.json': '{ "name": "a" }',
         node_modules: {
           c: {
-            'package.json': '{ "name": "c" }'
-          }
-        }
-      }
-    }
+            'package.json': '{ "name": "c" }',
+          },
+        },
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -695,9 +695,9 @@ test('multiple negate patterns', t => {
           '!foo/**',
           'foo/baz/*',
           '!foo/baz/e',
-          '!packages/a'
-        ]
-      }
+          '!packages/a',
+        ],
+      },
     }),
     'should not include any negated pattern'
   )
@@ -707,9 +707,9 @@ test('double negate patterns', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
-      }
-    }
+        'package.json': '{ "name": "a" }',
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -717,9 +717,9 @@ test('double negate patterns', t => {
       cwd,
       pkg: {
         workspaces: [
-          '!!packages/a'
-        ]
-      }
+          '!!packages/a',
+        ],
+      },
     }),
     'should include doubly-negated items into resulting map'
   )
@@ -729,9 +729,9 @@ test('triple negate patterns', t => {
   const cwd = t.testdir({
     packages: {
       a: {
-        'package.json': '{ "name": "a" }'
-      }
-    }
+        'package.json': '{ "name": "a" }',
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -740,9 +740,9 @@ test('triple negate patterns', t => {
       pkg: {
         workspaces: [
           'packages/*',
-          '!!!packages/a'
-        ]
-      }
+          '!!!packages/a',
+        ],
+      },
     }),
     'should exclude thrice-negated items from resulting map'
   )
@@ -754,11 +754,11 @@ test('try to declare node_modules', t => {
       bar: {
         node_modules: {
           b: {
-            'package.json': '{ "name": "b" }'
-          }
-        }
-      }
-    }
+            'package.json': '{ "name": "b" }',
+          },
+        },
+      },
+    },
   })
 
   return t.resolveMatchSnapshot(
@@ -766,9 +766,9 @@ test('try to declare node_modules', t => {
       cwd,
       pkg: {
         workspaces: [
-          'foo/bar/node_modules/b'
-        ]
-      }
+          'foo/bar/node_modules/b',
+        ],
+      },
     }),
     'should not include declared packages within node_modules'
   )
