@@ -7,21 +7,21 @@
 'use strict'
 exports[`test.js TAP double negate patterns > should include doubly-negated items into resulting map 1`] = `
 Map {
-  "a" => "{CWD}/test-double-negate-patterns/packages/a",
+  "a" => "{CWD}/tap-testdir-test-double-negate-patterns/packages/a",
 }
 `
 
 exports[`test.js TAP duplicated workspaces glob pattern > should allow dup glob-declared packages that resolve to same pathname 1`] = `
 Map {
-  "a" => "{CWD}/test-duplicated-workspaces-glob-pattern/packages/a",
-  "b" => "{CWD}/test-duplicated-workspaces-glob-pattern/packages/nested/b",
+  "a" => "{CWD}/tap-testdir-test-duplicated-workspaces-glob-pattern/packages/a",
+  "b" => "{CWD}/tap-testdir-test-duplicated-workspaces-glob-pattern/packages/nested/b",
 }
 `
 
 exports[`test.js TAP empty folders > should ignore empty folders 1`] = `
 Map {
-  "a" => "{CWD}/test-empty-folders/a",
-  "b" => "{CWD}/test-empty-folders/b",
+  "a" => "{CWD}/tap-testdir-test-empty-folders/a",
+  "b" => "{CWD}/tap-testdir-test-empty-folders/b",
 }
 `
 
@@ -31,7 +31,7 @@ Map {}
 
 exports[`test.js TAP ignore option > should ignore things from opts.ignore 1`] = `
 Map {
-  "a" => "{CWD}/test-ignore-option/packages/a",
+  "a" => "{CWD}/tap-testdir-test-ignore-option/packages/a",
 }
 `
 
@@ -49,21 +49,21 @@ Map {}
 
 exports[`test.js TAP negate pattern > should not include negated patterns 1`] = `
 Map {
-  "a" => "{CWD}/test-negate-pattern/packages/a",
+  "a" => "{CWD}/tap-testdir-test-negate-pattern/packages/a",
 }
 `
 
 exports[`test.js TAP nested glob lookups > should return a valid map 1`] = `
 Map {
-  "a" => "{CWD}/test-nested-glob-lookups/packages/a",
+  "a" => "{CWD}/tap-testdir-test-nested-glob-lookups/packages/a",
 }
 `
 
 exports[`test.js TAP nested node_modules > should ignore packages within node_modules 1`] = `
 Map {
-  "a" => "{CWD}/test-nested-node-modules/packages/a",
-  "b" => "{CWD}/test-nested-node-modules/packages/b",
-  "e" => "{CWD}/test-nested-node-modules/foo/bar/baz/e",
+  "a" => "{CWD}/tap-testdir-test-nested-node_modules/packages/a",
+  "b" => "{CWD}/tap-testdir-test-nested-node_modules/packages/b",
+  "e" => "{CWD}/tap-testdir-test-nested-node_modules/foo/bar/baz/e",
 }
 `
 
@@ -73,30 +73,30 @@ exports[`test.js TAP no cwd provided > value is pkg pathname 1`] = `
 
 exports[`test.js TAP no package name > should return map containing valid names as keys 1`] = `
 Map {
-  "@foo/bar" => "{CWD}/test-no-package-name/packages/@foo/bar",
-  "a" => "{CWD}/test-no-package-name/packages/a",
-  "b" => "{CWD}/test-no-package-name/packages/b",
+  "@foo/bar" => "{CWD}/tap-testdir-test-no-package-name/packages/@foo/bar",
+  "a" => "{CWD}/tap-testdir-test-no-package-name/packages/a",
+  "b" => "{CWD}/tap-testdir-test-no-package-name/packages/b",
 }
 `
 
 exports[`test.js TAP root declared within workspaces > should allow the root package to be declared within workspaces 1`] = `
 Map {
-  "a" => "{CWD}/test-root-declared-within-workspaces/packages/a",
-  "root-workspace" => "{CWD}/test-root-declared-within-workspaces",
+  "a" => "{CWD}/tap-testdir-test-root-declared-within-workspaces/packages/a",
+  "root-workspace" => "{CWD}/tap-testdir-test-root-declared-within-workspaces",
 }
 `
 
 exports[`test.js TAP simple workspaces config > should return a valid map 1`] = `
 Map {
-  "a" => "{CWD}/test-simple-workspaces-config/a",
-  "b" => "{CWD}/test-simple-workspaces-config/b",
+  "a" => "{CWD}/tap-testdir-test-simple-workspaces-config/a",
+  "b" => "{CWD}/tap-testdir-test-simple-workspaces-config/b",
 }
 `
 
 exports[`test.js TAP simple workspaces config with scoped pkg > should return a valid map 1`] = `
 Map {
-  "@ruyadorno/scoped-a" => "{CWD}/test-simple-workspaces-config-with-scoped-pkg/packages/a",
-  "@ruyadorno/scoped-b" => "{CWD}/test-simple-workspaces-config-with-scoped-pkg/packages/b",
+  "@ruyadorno/scoped-a" => "{CWD}/tap-testdir-test-simple-workspaces-config-with-scoped-pkg/packages/a",
+  "@ruyadorno/scoped-b" => "{CWD}/tap-testdir-test-simple-workspaces-config-with-scoped-pkg/packages/b",
 }
 `
 
@@ -110,14 +110,14 @@ Map {}
 
 exports[`test.js TAP use of / at end of defined globs > should return a valid map 1`] = `
 Map {
-  "a" => "{CWD}/test-use-of-at-end-of-defined-globs/a",
-  "b" => "{CWD}/test-use-of-at-end-of-defined-globs/b",
+  "a" => "{CWD}/tap-testdir-test-use-of-at-end-of-defined-globs/a",
+  "b" => "{CWD}/tap-testdir-test-use-of-at-end-of-defined-globs/b",
 }
 `
 
 exports[`test.js TAP workspaces config using simplistic glob > should return a valid map 1`] = `
 Map {
-  "a" => "{CWD}/test-workspaces-config-using-simplistic-glob/packages/a",
-  "b" => "{CWD}/test-workspaces-config-using-simplistic-glob/packages/b",
+  "a" => "{CWD}/tap-testdir-test-workspaces-config-using-simplistic-glob/packages/a",
+  "b" => "{CWD}/tap-testdir-test-workspaces-config-using-simplistic-glob/packages/b",
 }
 `
