@@ -39,14 +39,7 @@ function getPatterns (workspaces) {
     })
   }
 
-  return [
-    ...appendNegatedPatterns(workspacesDeclaration),
-    { pattern: '**/node_modules/**', negate: true }
-  ]
-}
-
-function isEmpty (patterns) {
-  return patterns.length < 2
+  return appendNegatedPatterns(workspacesDeclaration)
 }
 
 function getPackageName (pkg, pathname) {
@@ -89,7 +82,7 @@ async function mapWorkspaces (opts = {}) {
   const results = new Map()
   const seen = new Map()
 
-  if (isEmpty(patterns)) {
+  if (!patterns.length) {
     return results
   }
 
@@ -144,7 +137,6 @@ async function mapWorkspaces (opts = {}) {
       }
     }
   }
-
   return reverseResultMap(results)
 }
 
@@ -158,14 +150,13 @@ mapWorkspaces.virtual = function (opts = {}) {
 
   const { packages = {} } = opts.lockfile
   const { workspaces = [] } = packages[''] || {}
-  const patterns = getPatterns(workspaces)
-
   // uses a pathname-keyed map in order to negate the exact items
   const results = new Map()
-
-  if (isEmpty(patterns)) {
+  const patterns = getPatterns(workspaces)
+  if (!patterns.length) {
     return results
   }
+  patterns.push({ pattern: '**/node_modules/**', negate: true })
 
   const getPackagePathname = pkgPathmame(opts)
 
