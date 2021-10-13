@@ -1,7 +1,7 @@
 const tap = require('tap')
 const { test } = tap
 
-const mapWorkspaces = require('./index.js')
+const mapWorkspaces = require('../')
 
 tap.cleanSnapshot = str => {
   const cleanPath = path => path
@@ -28,39 +28,39 @@ test('simple workspaces config', t => {
             workspaces: {
               packages: [
                 'a',
-                'b'
-              ]
-            }
+                'b',
+              ],
+            },
           },
           a: {
             name: 'a',
             version: '1.0.0',
             dependencies: {
-              b: '^1.0.0'
-            }
+              b: '^1.0.0',
+            },
           },
           b: {
             name: 'b',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'node_modules/a': {
             resolved: 'a',
-            link: true
+            link: true,
           },
           'node_modules/b': {
             resolved: 'b',
-            link: true
-          }
+            link: true,
+          },
         },
         dependencies: {
           a: {
-            version: 'file:a'
+            version: 'file:a',
           },
           b: {
-            version: 'file:b'
-          }
-        }
-      }
+            version: 'file:b',
+          },
+        },
+      },
     }),
     'should return a valid map'
   )
@@ -73,16 +73,16 @@ test('unexpected lockfile info', t => {
   const results = [
     mapWorkspaces.virtual({
       cwd,
-      lockfile: 1
+      lockfile: 1,
     }),
     mapWorkspaces.virtual({
       cwd,
-      lockfile: 'foo'
+      lockfile: 'foo',
     }),
     mapWorkspaces.virtual({
       cwd,
-      lockfile: {}
-    })
+      lockfile: {},
+    }),
   ]
   t.matchSnapshot(results, 'should return an empty map')
   t.end()
@@ -97,7 +97,7 @@ test('invalid options', t => {
     () => mapWorkspaces.virtual(1),
     () => mapWorkspaces.virtual(NaN),
     () => mapWorkspaces.virtual(null),
-    () => mapWorkspaces.virtual()
+    () => mapWorkspaces.virtual(),
   ]
 
   for (const i of invalid) {
@@ -131,16 +131,16 @@ test('no cwd provided', t => {
           workspaces: {
             packages: [
               'a',
-              'b'
-            ]
-          }
+              'b',
+            ],
+          },
         },
         a: {
           name: 'a',
-          version: '1.0.0'
-        }
-      }
-    }
+          version: '1.0.0',
+        },
+      },
+    },
   })
 })
 
@@ -158,28 +158,28 @@ test('should ignore nested node_modules', t => {
             name: 'workspace-ignore-nm',
             workspaces: {
               packages: [
-                'packages/**'
-              ]
-            }
+                'packages/**',
+              ],
+            },
           },
           'node_modules/a': {
             resolved: 'packages/a',
-            link: true
+            link: true,
           },
           'packages/a': {
             name: 'a',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'packages/a/node_modules/not-a-workspace': {
-            name: 'not-a-workspace'
-          }
+            name: 'not-a-workspace',
+          },
         },
         dependencies: {
           a: {
-            version: 'file:packages/a'
-          }
-        }
-      }
+            version: 'file:packages/a',
+          },
+        },
+      },
     }),
     'should return a valid map'
   )
@@ -201,12 +201,12 @@ test('transitive dependencies', t => {
             name: 'workspaces-transitive-deps',
             version: '1.0.0',
             workspaces: [
-              'packages/**'
-            ]
+              'packages/**',
+            ],
           },
           'node_modules/a': {
             resolved: 'packages/a',
-            link: true
+            link: true,
           },
           'node_modules/once': {
             name: 'once',
@@ -215,27 +215,27 @@ test('transitive dependencies', t => {
             integrity: 'sha1-WDsap3WWHUsROsF9nFC6753Xa9E=',
             dev: true,
             dependencies: {
-              wrappy: '1'
-            }
+              wrappy: '1',
+            },
           },
           'node_modules/wrappy': {
             name: 'wrappy',
             version: '1.0.2',
             resolved: 'https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz',
             integrity: 'sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=',
-            dev: true
+            dev: true,
           },
           'packages/a': {
             name: 'a',
             version: '1.0.0',
             devDependencies: {
-              once: '^1.4.0'
-            }
-          }
+              once: '^1.4.0',
+            },
+          },
         },
         dependencies: {
           a: {
-            version: 'file:packages/a'
+            version: 'file:packages/a',
           },
           once: {
             version: '1.4.0',
@@ -243,17 +243,17 @@ test('transitive dependencies', t => {
             integrity: 'sha1-WDsap3WWHUsROsF9nFC6753Xa9E=',
             dev: true,
             requires: {
-              wrappy: '1'
-            }
+              wrappy: '1',
+            },
           },
           wrappy: {
             version: '1.0.2',
             resolved: 'https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz',
             integrity: 'sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=',
-            dev: true
-          }
-        }
-      }
+            dev: true,
+          },
+        },
+      },
     }),
     'should return a map containing only the valid workspaces'
   )
@@ -275,32 +275,32 @@ test('negate globs in workspaces config', t => {
             workspaces: {
               packages: [
                 'packages/*',
-                '!packages/b'
-              ]
-            }
+                '!packages/b',
+              ],
+            },
           },
           'packages/a': {
             name: 'a',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'packages/b': {
             name: 'b',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'node_modules/a': {
             resolved: 'packages/a',
-            link: true
-          }
+            link: true,
+          },
         },
         dependencies: {
           a: {
-            version: 'file:packages/a'
+            version: 'file:packages/a',
           },
           b: {
-            version: 'file:packages/b'
-          }
-        }
-      }
+            version: 'file:packages/b',
+          },
+        },
+      },
     }),
     'should not return negated workspaces'
   )
@@ -322,32 +322,32 @@ test('double-negated', t => {
             workspaces: {
               packages: [
                 'packages/*',
-                '!!packages/b'
-              ]
-            }
+                '!!packages/b',
+              ],
+            },
           },
           'packages/a': {
             name: 'a',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'packages/b': {
             name: 'b',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'node_modules/a': {
             resolved: 'packages/a',
-            link: true
-          }
+            link: true,
+          },
         },
         dependencies: {
           a: {
-            version: 'file:packages/a'
+            version: 'file:packages/a',
           },
           b: {
-            version: 'file:packages/b'
-          }
-        }
-      }
+            version: 'file:packages/b',
+          },
+        },
+      },
     }),
     'should return the doubly-negated item as part of the Map'
   )
@@ -369,32 +369,32 @@ test('triple-negated', t => {
             workspaces: {
               packages: [
                 'packages/*',
-                '!!!packages/b'
-              ]
-            }
+                '!!!packages/b',
+              ],
+            },
           },
           'packages/a': {
             name: 'a',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'packages/b': {
             name: 'b',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'node_modules/a': {
             resolved: 'packages/a',
-            link: true
-          }
+            link: true,
+          },
         },
         dependencies: {
           a: {
-            version: 'file:packages/a'
+            version: 'file:packages/a',
           },
           b: {
-            version: 'file:packages/b'
-          }
-        }
-      }
+            version: 'file:packages/b',
+          },
+        },
+      },
     }),
     'should exclude that item from returned Map'
   )
@@ -417,32 +417,32 @@ test('matched then negated then match again', t => {
               packages: [
                 'packages/*',
                 '!packages/b',
-                'packages/b'
-              ]
-            }
+                'packages/b',
+              ],
+            },
           },
           'packages/a': {
             name: 'a',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'packages/b': {
             name: 'b',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'node_modules/a': {
             resolved: 'packages/a',
-            link: true
-          }
+            link: true,
+          },
         },
         dependencies: {
           a: {
-            version: 'file:packages/a'
+            version: 'file:packages/a',
           },
           b: {
-            version: 'file:packages/b'
-          }
-        }
-      }
+            version: 'file:packages/b',
+          },
+        },
+      },
     }),
     'should include item on returned Map'
   )
@@ -466,32 +466,32 @@ test('matched then negated then match again then negate again', t => {
                 'packages/**',
                 '!packages/foo',
                 'packages/foo/*',
-                '!packages/foo/b'
-              ]
-            }
+                '!packages/foo/b',
+              ],
+            },
           },
           'packages/a': {
             name: 'a',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'packages/foo/b': {
             name: 'b',
-            version: '1.0.0'
+            version: '1.0.0',
           },
           'node_modules/a': {
             resolved: 'packages/a',
-            link: true
-          }
+            link: true,
+          },
         },
         dependencies: {
           a: {
-            version: 'file:packages/a'
+            version: 'file:packages/a',
           },
           b: {
-            version: 'file:packages/foo/b'
-          }
-        }
-      }
+            version: 'file:packages/foo/b',
+          },
+        },
+      },
     }),
     'should exclude negated item from returned Map'
   )
