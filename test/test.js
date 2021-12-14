@@ -1,8 +1,6 @@
 const tap = require('tap')
 const { test } = tap
 
-const requireInject = require('require-inject')
-
 const mapWorkspaces = require('../')
 
 tap.cleanSnapshot = str => {
@@ -409,7 +407,7 @@ test('unexpected rpj errors', t => {
   const err = new Error('ERR')
   err.code = 'ERR'
 
-  const mapW = requireInject('../', {
+  const mapW = t.mock('../', {
     'read-package-json-fast': () => Promise.reject(err),
   })
 
