@@ -8,6 +8,9 @@ on:
     branches:
       - main
       - latest
+  schedule:
+    # "At 02:00 on Monday" https://crontab.guru/#0_1_*_*_1
+    - cron: "0 2 * * 1"
 
 jobs:
   lint:
@@ -17,16 +20,15 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-          cache: npm
       - run: npm i --prefer-online -g npm@latest
-      - run: npm ci
+      - run: npm i
       - run: npm run lint
 
   test:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [12.13.0, 12.x, 14.15.0, 14.x, 16.x]
+        node-version: [12.13.0, 12.x, 14.15.0, 14.x, 16.13.0, 16.x]
         platform:
         - os: ubuntu-latest
           shell: bash
@@ -47,8 +49,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
       - run: npm i --prefer-online -g npm@latest
-      - run: npm ci
+      - run: npm i
       - run: npm test --ignore-scripts
-      - run: npm ls -a

@@ -42,9 +42,9 @@
     ]
   },
   "devDependencies": {
+    "@npmcli/template-oss": "^2.4.0",
     "eslint": "^8.0.0",
     "require-inject": "^1.4.4",
-    "@npmcli/template-oss": "^2.0.0",
     "tap": "^15.0.10"
   },
   "dependencies": {
@@ -53,5 +53,7 @@
     "minimatch": "^3.0.4",
     "read-package-json-fast": "^2.0.1"
   },
-  "templateVersion": "2.0.0"
+  "templateOSS": {
+    "version": "2.4.0"
+  }
 }
