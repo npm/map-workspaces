@@ -5,6 +5,12 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
+exports[`test/test.js TAP backslashes are normalized > matches with backslashes 1`] = `
+Map {
+  "a" => "{CWD}/test/tap-testdir-test-backslashes-are-normalized/packages/a",
+}
+`
+
 exports[`test/test.js TAP double negate patterns > should include doubly-negated items into resulting map 1`] = `
 Map {
   "a" => "{CWD}/test/tap-testdir-test-double-negate-patterns/packages/a",

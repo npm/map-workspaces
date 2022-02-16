@@ -771,3 +771,25 @@ test('try to declare node_modules', t => {
     'should not include declared packages within node_modules'
   )
 })
+
+test('backslashes are normalized', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }',
+      },
+    },
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages\\*',
+        ],
+      },
+    }),
+    'matches with backslashes'
+  )
+})
