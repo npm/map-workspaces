@@ -38,7 +38,7 @@
     "check-coverage": true
   },
   "devDependencies": {
-    "@npmcli/template-oss": "^2.8.1",
+    "@npmcli/template-oss": "^2.9.2",
     "eslint": "^8.10.0",
     "tap": "^15.1.6"
   },
@@ -49,6 +49,6 @@
     "read-package-json-fast": "^2.0.3"
   },
   "templateOSS": {
-    "version": "2.8.1"
+    "version": "2.9.2"
   }
 }
