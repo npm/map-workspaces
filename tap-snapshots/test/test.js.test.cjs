@@ -41,12 +41,41 @@ Map {
 }
 `
 
+exports[`test/test.js TAP match duplicates then exclude one > should include the non-excluded item on returned Map 1`] = `
+Map {
+  "a" => "{CWD}/test/tap-testdir-test-match-duplicates-then-exclude-one/packages/a",
+}
+`
+
+exports[`test/test.js TAP matched then negated then match again > should include item on returned Map 1`] = `
+Map {
+  "a" => "{CWD}/test/tap-testdir-test-matched-then-negated-then-match-again/packages/b/a",
+}
+`
+
+exports[`test/test.js TAP matched then negated then match again with wildcards > should exclude item on returned Map 1`] = `
+Map {}
+`
+
 exports[`test/test.js TAP missing pkg info > should return an empty map 1`] = `
 Array [
   Map {},
   Map {},
   Map {},
 ]
+`
+
+exports[`test/test.js TAP multiple duplicated workspaces config > should throw an error listing all duplicates 1`] = `
+Error: must not have multiple workspaces with the same name
+package 'a' has conflicts in the following paths:
+    {CWD}/test/tap-testdir-test-multiple-duplicated-workspaces-config/packages/a
+    {CWD}/test/tap-testdir-test-multiple-duplicated-workspaces-config/packages/b
+    {CWD}/test/tap-testdir-test-multiple-duplicated-workspaces-config/packages/c
+package 'b' has conflicts in the following paths:
+    {CWD}/test/tap-testdir-test-multiple-duplicated-workspaces-config/packages/d
+    {CWD}/test/tap-testdir-test-multiple-duplicated-workspaces-config/packages/e {
+  "code": "EDUPLICATEWORKSPACE",
+}
 `
 
 exports[`test/test.js TAP multiple negate patterns > should not include any negated pattern 1`] = `

@@ -7,7 +7,7 @@ tap.cleanSnapshot = str => {
   const cleanPath = path => path
     .replace(/\\+/g, '/') // normalize slashes
     .replace(/"\w:/g, '"') // gets rid of drive letter in snapshot
-    .replace(/^\w:/g, '') // gets rid of drive letter in cwd/paths
+    .replace(/^(\s*)\w:/gm, '$1') // gets rid of drive letter in cwd/paths
   const cwd = cleanPath(process.cwd())
   const pathname = cleanPath(str)
   return pathname.split(cwd).join('{CWD}')
@@ -226,6 +226,42 @@ test('duplicated workspaces glob pattern', t => {
       },
     }),
     'should allow dup glob-declared packages that resolve to same pathname'
+  )
+})
+
+test('multiple duplicated workspaces config', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }',
+      },
+      b: {
+        'package.json': '{ "name": "a" }',
+      },
+      c: {
+        'package.json': '{ "name": "a" }',
+      },
+      d: {
+        'package.json': '{ "name": "b" }',
+      },
+      e: {
+        'package.json': '{ "name": "b" }',
+      },
+    },
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'packages/*',
+          ],
+        },
+      },
+    }).catch(error => Promise.resolve(error)),
+    'should throw an error listing all duplicates'
   )
 })
 
@@ -791,5 +827,84 @@ test('backslashes are normalized', t => {
       },
     }),
     'matches with backslashes'
+  )
+})
+
+test('matched then negated then match again with wildcards', t => {
+  const cwd = t.testdir({
+    packages: {
+      b: {
+        a: {
+          'package.json': '{ "name": "a" }',
+        },
+      },
+    },
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages/**',
+          '!packages/b/**',
+        ],
+      },
+    }),
+    'should exclude item on returned Map'
+  )
+})
+
+test('matched then negated then match again', t => {
+  const cwd = t.testdir({
+    packages: {
+      b: {
+        a: {
+          'package.json': '{ "name": "a" }',
+        },
+      },
+    },
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages/**',
+          '!packages/b/**',
+          'packages/b/a',
+        ],
+      },
+    }),
+    'should include item on returned Map'
+  )
+})
+
+test('match duplicates then exclude one', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }',
+      },
+      b: {
+        a: {
+          'package.json': '{ "name": "a" }',
+        },
+      },
+    },
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages/**',
+          '!packages/b/**',
+        ],
+      },
+    }),
+    'should include the non-excluded item on returned Map'
   )
 })
