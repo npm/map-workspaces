@@ -1,5 +1,17 @@
 # Changelog
 
+### [2.0.2](https://www.github.com/npm/map-workspaces/compare/v2.0.1...v2.0.2) (2022-03-10)
+
+
+### Bug Fixes
+
+* evaluate all patterns before throwing EDUPLICATEWORKSPACE ([#32](https://www.github.com/npm/map-workspaces/issues/32)) ([ca0bf18](https://www.github.com/npm/map-workspaces/commit/ca0bf18d4852017c3befc3c908baf29e6e72a55f))
+
+
+### Dependencies
+
+* update minimatch requirement from ^5.0.0 to ^5.0.1 ([#28](https://www.github.com/npm/map-workspaces/issues/28)) ([5c4fd0d](https://www.github.com/npm/map-workspaces/commit/5c4fd0d28d19539fdb9df85bcafcc7122b3702b0))
+
 ### [2.0.1](https://www.github.com/npm/map-workspaces/compare/v2.0.0...v2.0.1) (2022-02-17)
 
 
