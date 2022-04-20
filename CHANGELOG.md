@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.3](https://github.com/npm/map-workspaces/compare/v2.0.2...v2.0.3) (2022-04-20)
+
+
+### Dependencies
+
+* bump glob from 7.2.0 to 8.0.1 ([#43](https://github.com/npm/map-workspaces/issues/43)) ([d1db8e7](https://github.com/npm/map-workspaces/commit/d1db8e7dcf3b70008bf050e41472ba600d8a24de))
+
 ### [2.0.2](https://www.github.com/npm/map-workspaces/compare/v2.0.1...v2.0.2) (2022-03-10)
 
 
