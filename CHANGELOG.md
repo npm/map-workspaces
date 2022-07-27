@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.4](https://github.com/npm/map-workspaces/compare/v2.0.3...v2.0.4) (2022-06-29)
+
+
+### Bug Fixes
+
+* replace deprecated String.prototype.substr() ([#41](https://github.com/npm/map-workspaces/issues/41)) ([1452a05](https://github.com/npm/map-workspaces/commit/1452a052495664505313027928213c4473c44842))
+
 ### [2.0.3](https://github.com/npm/map-workspaces/compare/v2.0.2...v2.0.3) (2022-04-20)
 
 
