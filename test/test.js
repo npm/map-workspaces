@@ -260,7 +260,7 @@ test('multiple duplicated workspaces config', t => {
           ],
         },
       },
-    }).catch(error => Promise.resolve(error)),
+    }).catch(error => error),
     'should throw an error listing all duplicates'
   )
 })
