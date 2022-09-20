@@ -7,7 +7,7 @@
     "lib/"
   ],
   "engines": {
-    "node": "^12.13.0 || ^14.15.0 || >=16.0.0"
+    "node": "^14.17.0 || ^16.13.0 || >=18.0.0"
   },
   "description": "Retrieves a name:pathname Map for a given workspaces config",
   "repository": {
@@ -29,16 +29,17 @@
     "pretest": "npm run lint",
     "test": "tap",
     "snap": "tap",
-    "preversion": "npm test",
-    "postversion": "npm publish",
-    "prepublishOnly": "git push origin --follow-tags",
     "postlint": "template-oss-check",
     "lintfix": "npm run lint -- --fix",
     "posttest": "npm run lint",
     "template-oss-apply": "template-oss-apply --force"
   },
   "tap": {
-    "check-coverage": true
+    "check-coverage": true,
+    "nyc-arg": [
+      "--exclude",
+      "tap-snapshots/**"
+    ]
   },
   "devDependencies": {
     "@npmcli/eslint-config": "^3.0.1",
@@ -53,6 +54,6 @@
   },
   "templateOSS": {
     "//@npmcli/template-oss": "This file is partially managed by @npmcli/template-oss. Edits may be overwritten.",
-    "version": "3.6.0"
+    "version": "4.3.2"
   }
 }
