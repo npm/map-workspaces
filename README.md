@@ -10,7 +10,7 @@ Long version: Reads the `workspaces` property from a valid **workspaces configur
 
 ## Install
 
-`npm install map-workspaces`
+`npm install @npmcli/map-workspaces`
 
 ## Usage:
 
