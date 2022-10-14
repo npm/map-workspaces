@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.0.0](https://github.com/npm/map-workspaces/compare/v2.0.4...v3.0.0) (2022-10-12)
+
+### ⚠️ BREAKING CHANGES
+
+* `@npmcli/map-workspaces` is now compatible with the following semver range for node: `^14.17.0 || ^16.13.0 || >=18.0.0`
+
+### Features
+
+* [`d018d85`](https://github.com/npm/map-workspaces/commit/d018d850e67ca4da179db0368728b144dde10cad) [#60](https://github.com/npm/map-workspaces/pull/60) postinstall for dependabot template-oss PR (@lukekarrys)
+
+### Documentation
+
+* [`2f9abc7`](https://github.com/npm/map-workspaces/commit/2f9abc7037e1872ff94787f59ee103c64939f708) [#64](https://github.com/npm/map-workspaces/pull/64) update readme install package name (#64) (@wraithgar)
+
+### Dependencies
+
+* [`8f3fcce`](https://github.com/npm/map-workspaces/commit/8f3fccefa57e06d4dd5e271cc1255f43e5528029) [#68](https://github.com/npm/map-workspaces/pull/68) bump read-package-json-fast from 2.0.3 to 3.0.0
+
 ## [2.0.4](https://github.com/npm/map-workspaces/compare/v2.0.3...v2.0.4) (2022-06-29)
 
 
