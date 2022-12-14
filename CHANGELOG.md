@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.1](https://github.com/npm/map-workspaces/compare/v3.0.0...v3.0.1) (2022-12-14)
+
+### Dependencies
+
+* [`15c752f`](https://github.com/npm/map-workspaces/commit/15c752f9bdf18ffbd719e68a385f19494f7ee110) [#75](https://github.com/npm/map-workspaces/pull/75) bump @npmcli/name-from-folder from 1.0.1 to 2.0.0
+
 ## [3.0.0](https://github.com/npm/map-workspaces/compare/v2.0.4...v3.0.0) (2022-10-12)
 
 ### ⚠️ BREAKING CHANGES
