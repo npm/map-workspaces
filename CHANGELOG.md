@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.2](https://github.com/npm/map-workspaces/compare/v3.0.1...v3.0.2) (2023-02-06)
+
+### Dependencies
+
+* [`33326ea`](https://github.com/npm/map-workspaces/commit/33326ea8a71e79370975b4547df0aa04d108a35a) [#79](https://github.com/npm/map-workspaces/pull/79) bump minimatch from 5.1.6 to 6.1.6
+
 ## [3.0.1](https://github.com/npm/map-workspaces/compare/v3.0.0...v3.0.1) (2022-12-14)
 
 ### Dependencies
