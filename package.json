@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@npmcli/name-from-folder": "^2.0.0",
-    "glob": "^9.3.1",
+    "glob": "^10.1.0",
     "minimatch": "^7.4.2",
     "read-package-json-fast": "^3.0.0"
   },
