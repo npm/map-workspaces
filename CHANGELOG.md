@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.4](https://github.com/npm/map-workspaces/compare/v3.0.3...v3.0.4) (2023-04-27)
+
+### Dependencies
+
+* [`978c416`](https://github.com/npm/map-workspaces/commit/978c4164368a5821284a62a051cb996728a10d93) [#106](https://github.com/npm/map-workspaces/pull/106) bump glob from 9.3.5 to 10.2.2 (#106)
+* [`1c8e72d`](https://github.com/npm/map-workspaces/commit/1c8e72d4c253369a60b336ed59c2c3f7601bc47a) [#103](https://github.com/npm/map-workspaces/pull/103) bump minimatch from 7.4.6 to 9.0.0 (#103)
+
 ## [3.0.3](https://github.com/npm/map-workspaces/compare/v3.0.2...v3.0.3) (2023-03-21)
 
 ### Dependencies
