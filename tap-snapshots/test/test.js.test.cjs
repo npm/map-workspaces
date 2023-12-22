@@ -96,9 +96,9 @@ Map {
 
 exports[`test/test.js TAP nested node_modules > should ignore packages within node_modules 1`] = `
 Map {
+  "e" => "{CWD}/test/tap-testdir-test-nested-node_modules/foo/bar/baz/e",
   "a" => "{CWD}/test/tap-testdir-test-nested-node_modules/packages/a",
   "b" => "{CWD}/test/tap-testdir-test-nested-node_modules/packages/b",
-  "e" => "{CWD}/test/tap-testdir-test-nested-node_modules/foo/bar/baz/e",
 }
 `
 
@@ -116,8 +116,8 @@ Map {
 
 exports[`test/test.js TAP root declared within workspaces > should allow the root package to be declared within workspaces 1`] = `
 Map {
-  "a" => "{CWD}/test/tap-testdir-test-root-declared-within-workspaces/packages/a",
   "root-workspace" => "{CWD}/test/tap-testdir-test-root-declared-within-workspaces",
+  "a" => "{CWD}/test/tap-testdir-test-root-declared-within-workspaces/packages/a",
 }
 `
 
