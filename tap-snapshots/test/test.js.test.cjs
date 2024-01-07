@@ -156,3 +156,14 @@ Map {
   "b" => "{CWD}/test/tap-testdir-test-workspaces-config-using-simplistic-glob/packages/b",
 }
 `
+
+exports[`test/test.js TAP workspaces order > should match the exact order of workspaces 1`] = `
+Map {
+  "@npmcli/docs" => "{CWD}/test/tap-testdir-test-workspaces-order/docs",
+  "@npmcli/smoke-tests" => "{CWD}/test/tap-testdir-test-workspaces-order/smoke-tests",
+  "@npmcli/mock-registry" => "{CWD}/test/tap-testdir-test-workspaces-order/mock-registry",
+  "@npmcli/mock-globals" => "{CWD}/test/tap-testdir-test-workspaces-order/mock-globals",
+  "a" => "{CWD}/test/tap-testdir-test-workspaces-order/workspaces/a",
+  "b" => "{CWD}/test/tap-testdir-test-workspaces-order/workspaces/b",
+}
+`
