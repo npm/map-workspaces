@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.6](https://github.com/npm/map-workspaces/compare/v3.0.5...v3.0.6) (2024-04-10)
+
+### Bug Fixes
+
+* [`e2a803b`](https://github.com/npm/map-workspaces/commit/e2a803bd610cca87a9618c8f118aca56b6e936f1) [#145](https://github.com/npm/map-workspaces/pull/145) allow for workspace patterns to start with `./` (#145) (@wraithgar)
+
 ## [3.0.5](https://github.com/npm/map-workspaces/compare/v3.0.4...v3.0.5) (2024-04-10)
 
 ### Bug Fixes
