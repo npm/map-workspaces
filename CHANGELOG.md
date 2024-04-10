@@ -1,5 +1,32 @@
 # Changelog
 
+## [3.0.5](https://github.com/npm/map-workspaces/compare/v3.0.4...v3.0.5) (2024-04-10)
+
+### Bug Fixes
+
+* [`c89a529`](https://github.com/npm/map-workspaces/commit/c89a529e1db38d2f672dc5d71561efeab6d93d16) [#143](https://github.com/npm/map-workspaces/pull/143) faster workspace mapping (#143) (@wraithgar, @thecodrr)
+
+### Documentation
+
+* [`304c345`](https://github.com/npm/map-workspaces/commit/304c345a52eeb298437c51cb64655ae1872efac7) [#141](https://github.com/npm/map-workspaces/pull/141) readme: fix broken badge URLs (#141) (@10xLaCroixDrinker)
+
+### Chores
+
+* [`2c3d889`](https://github.com/npm/map-workspaces/commit/2c3d889bb2a354e0293ff17b5f6c25af7d96d6ba) [#137](https://github.com/npm/map-workspaces/pull/137) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`1e78272`](https://github.com/npm/map-workspaces/commit/1e7827287e30ccb6a0bb5501ac0acf67f2aabe9e) [#137](https://github.com/npm/map-workspaces/pull/137) bump @npmcli/template-oss from 4.21.1 to 4.21.3 (@dependabot[bot])
+* [`a5b6bf5`](https://github.com/npm/map-workspaces/commit/a5b6bf5f5c2ab304e96fea6e039ef5135f9dc543) [#134](https://github.com/npm/map-workspaces/pull/134) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`797d0a0`](https://github.com/npm/map-workspaces/commit/797d0a04c2be15c09f18407b8ef32b312f47bcae) [#134](https://github.com/npm/map-workspaces/pull/134) bump @npmcli/template-oss from 4.19.0 to 4.21.1 (@dependabot[bot])
+* [`4017779`](https://github.com/npm/map-workspaces/commit/4017779a15e92fea8e31a92b99f486225e9488de) [#115](https://github.com/npm/map-workspaces/pull/115) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`803e42f`](https://github.com/npm/map-workspaces/commit/803e42fcd9ec25b8cc84a6a089d8d3ae0c2029a6) [#115](https://github.com/npm/map-workspaces/pull/115) bump @npmcli/template-oss from 4.18.1 to 4.19.0 (@dependabot[bot])
+* [`b214753`](https://github.com/npm/map-workspaces/commit/b21475370393cf980fad1983d22c1415403f7991) [#114](https://github.com/npm/map-workspaces/pull/114) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`17747a7`](https://github.com/npm/map-workspaces/commit/17747a78077a4d8faa5450941802b9f757fed60d) [#114](https://github.com/npm/map-workspaces/pull/114) bump @npmcli/template-oss from 4.18.0 to 4.18.1 (@dependabot[bot])
+* [`ff82968`](https://github.com/npm/map-workspaces/commit/ff82968a3dbb78659fb7febfce4841bf58c514de) [#113](https://github.com/npm/map-workspaces/pull/113) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`f38ff1e`](https://github.com/npm/map-workspaces/commit/f38ff1ec13fb4e74f4be09d7ebc46cb40c670276) [#113](https://github.com/npm/map-workspaces/pull/113) bump @npmcli/template-oss from 4.17.0 to 4.18.0 (@dependabot[bot])
+* [`cf234ce`](https://github.com/npm/map-workspaces/commit/cf234cef3e4454de8f4203b5e13178cef3632084) [#112](https://github.com/npm/map-workspaces/pull/112) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`414331d`](https://github.com/npm/map-workspaces/commit/414331d8fbb42d3568534ad7b2744e9982271629) [#112](https://github.com/npm/map-workspaces/pull/112) bump @npmcli/template-oss from 4.15.1 to 4.17.0 (@dependabot[bot])
+* [`003893e`](https://github.com/npm/map-workspaces/commit/003893e523539920f5df3487bf473f9abdb3b391) [#110](https://github.com/npm/map-workspaces/pull/110) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`8fcd7ee`](https://github.com/npm/map-workspaces/commit/8fcd7ee03a4f27da081af8f4d4bd3a8f6b8b6337) [#110](https://github.com/npm/map-workspaces/pull/110) bump @npmcli/template-oss from 4.14.1 to 4.15.1 (@dependabot[bot])
+
 ## [3.0.4](https://github.com/npm/map-workspaces/compare/v3.0.3...v3.0.4) (2023-04-27)
 
 ### Dependencies
