@@ -11,9 +11,9 @@ Map {
 }
 `
 
-exports[`test/test.js TAP double negate patterns > should include doubly-negated items into resulting map 1`] = `
+exports[`test/test.js TAP double negated patterns > should include doubly-negated items into resulting map 1`] = `
 Map {
-  "a" => "{CWD}/test/tap-testdir-test-double-negate-patterns/packages/a",
+  "a" => "{CWD}/test/tap-testdir-test-double-negated-patterns/packages/a",
 }
 `
 
@@ -78,13 +78,13 @@ package 'b' has conflicts in the following paths:
 }
 `
 
-exports[`test/test.js TAP multiple negate patterns > should not include any negated pattern 1`] = `
+exports[`test/test.js TAP multiple negated patterns > should not include any negated pattern 1`] = `
 Map {}
 `
 
-exports[`test/test.js TAP negate pattern > should not include negated patterns 1`] = `
+exports[`test/test.js TAP negated pattern > should not include negated patterns 1`] = `
 Map {
-  "a" => "{CWD}/test/tap-testdir-test-negate-pattern/packages/a",
+  "a" => "{CWD}/test/tap-testdir-test-negated-pattern/packages/a",
 }
 `
 
@@ -114,6 +114,12 @@ Map {
 }
 `
 
+exports[`test/test.js TAP overlapping negated pattern > should not include negated patterns 1`] = `
+Map {
+  "a" => "{CWD}/test/tap-testdir-test-overlapping-negated-pattern/packages/a",
+}
+`
+
 exports[`test/test.js TAP root declared within workspaces > should allow the root package to be declared within workspaces 1`] = `
 Map {
   "a" => "{CWD}/test/tap-testdir-test-root-declared-within-workspaces/packages/a",
@@ -135,7 +141,7 @@ Map {
 }
 `
 
-exports[`test/test.js TAP triple negate patterns > should exclude thrice-negated items from resulting map 1`] = `
+exports[`test/test.js TAP triple negated patterns > should exclude thrice-negated items from resulting map 1`] = `
 Map {}
 `
 

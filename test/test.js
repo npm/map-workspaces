@@ -649,7 +649,7 @@ test('ignore option', t => {
   )
 })
 
-test('negate pattern', t => {
+test('negated pattern', t => {
   const cwd = t.testdir({
     foo: {
       bar: {
@@ -692,7 +692,7 @@ test('negate pattern', t => {
   )
 })
 
-test('multiple negate patterns', t => {
+test('multiple negated patterns', t => {
   const cwd = t.testdir({
     foo: {
       bar: {
@@ -737,7 +737,51 @@ test('multiple negate patterns', t => {
   )
 })
 
-test('double negate patterns', t => {
+test('overlapping negated pattern', t => {
+  const cwd = t.testdir({
+    foo: {
+      bar: {
+        baz: {
+          e: {
+            'package.json': '{ "name": "e" }',
+          },
+        },
+        node_modules: {
+          b: {
+            'package.json': '{ "name": "b" }',
+          },
+        },
+      },
+    },
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }',
+        node_modules: {
+          c: {
+            'package.json': '{ "name": "c" }',
+          },
+        },
+      },
+    },
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: [
+          'packages/*',
+          'foo/**',
+          '**/baz/**',
+          '!**/baz/**',
+        ],
+      },
+    }),
+    'should not include negated patterns'
+  )
+})
+
+test('double negated patterns', t => {
   const cwd = t.testdir({
     packages: {
       a: {
@@ -759,7 +803,7 @@ test('double negate patterns', t => {
   )
 })
 
-test('triple negate patterns', t => {
+test('triple negated patterns', t => {
   const cwd = t.testdir({
     packages: {
       a: {
