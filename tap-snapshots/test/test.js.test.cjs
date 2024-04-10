@@ -156,6 +156,12 @@ Map {
 }
 `
 
+exports[`test/test.js TAP workspaces config using relative path globs > should return a valid map 1`] = `
+Map {
+  "a" => "{CWD}/test/tap-testdir-test-workspaces-config-using-relative-path-globs/packages/a",
+}
+`
+
 exports[`test/test.js TAP workspaces config using simplistic glob > should return a valid map 1`] = `
 Map {
   "a" => "{CWD}/test/tap-testdir-test-workspaces-config-using-simplistic-glob/packages/a",

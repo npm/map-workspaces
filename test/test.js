@@ -140,6 +140,34 @@ test('workspaces config using simplistic glob', t => {
   )
 })
 
+test('workspaces config using relative path globs', t => {
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }',
+      },
+      b: {
+        'package.json': '{ "name": "b" }',
+      },
+    },
+  })
+
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            './packages/*',
+            '!./packages/b',
+          ],
+        },
+      },
+    }),
+    'should return a valid map'
+  )
+})
+
 test('duplicated workspaces config', t => {
   const cwd = t.testdir({
     packages: {
