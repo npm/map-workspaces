@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.7](https://github.com/npm/map-workspaces/compare/v3.0.6...v3.0.7) (2024-04-21)
+
+### Chores
+
+* [`fbb2246`](https://github.com/npm/map-workspaces/commit/fbb224634efa33b56f176319914085e85767f61c) [#147](https://github.com/npm/map-workspaces/pull/147) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`97afcdf`](https://github.com/npm/map-workspaces/commit/97afcdf5353c5e92ec205133afb8fceb513bbbdd) [#147](https://github.com/npm/map-workspaces/pull/147) bump @npmcli/template-oss from 4.21.3 to 4.21.4 (@dependabot[bot])
+
 ## [3.0.6](https://github.com/npm/map-workspaces/compare/v3.0.5...v3.0.6) (2024-04-10)
 
 ### Bug Fixes
