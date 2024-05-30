@@ -26,7 +26,6 @@
   "license": "ISC",
   "scripts": {
     "lint": "eslint \"**/*.{js,cjs,ts,mjs,jsx,tsx}\"",
-    "pretest": "npm run lint",
     "test": "tap",
     "snap": "tap",
     "postlint": "template-oss-check",
