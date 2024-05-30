@@ -472,7 +472,7 @@ test('unexpected rpj errors', t => {
   err.code = 'ERR'
 
   const mapW = t.mock('../', {
-    'read-package-json-fast': () => Promise.reject(err),
+    '@npmcli/package-json': { normalize: () => Promise.reject(err) },
   })
 
   return t.rejects(
