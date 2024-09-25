@@ -47,7 +47,7 @@
     "tap": "^16.0.1"
   },
   "dependencies": {
-    "@npmcli/name-from-folder": "^2.0.0",
+    "@npmcli/name-from-folder": "^3.0.0",
     "glob": "^10.2.2",
     "minimatch": "^9.0.0",
     "read-package-json-fast": "^3.0.0"
