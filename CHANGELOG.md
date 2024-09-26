@@ -1,5 +1,23 @@
 # Changelog
 
+## [4.0.0](https://github.com/npm/map-workspaces/compare/v3.0.6...v4.0.0) (2024-09-26)
+### ⚠️ BREAKING CHANGES
+* `@npmcli/map-workspaces` now supports node `^18.17.0 || >=20.5.0`
+### Bug Fixes
+* [`211aef3`](https://github.com/npm/map-workspaces/commit/211aef36df4b51aae4ebd8dce361064b3b072a52) [#153](https://github.com/npm/map-workspaces/pull/153) use @npmcli/package-json to parse packages (@wraithgar)
+* [`3959800`](https://github.com/npm/map-workspaces/commit/395980086f6152436b494b88a2441c4e7836c3b3) [#168](https://github.com/npm/map-workspaces/pull/168) align to npm 10 node engine range (@reggi)
+### Dependencies
+* [`044b3a8`](https://github.com/npm/map-workspaces/commit/044b3a83616b3df4917e49dfc2dabe148db8d02e) [#153](https://github.com/npm/map-workspaces/pull/153) `@npmcli/package-json@5.2.0`
+* [`a493618`](https://github.com/npm/map-workspaces/commit/a493618d0627dca39f6c435bc8df72991a323be1) [#153](https://github.com/npm/map-workspaces/pull/153) remove read-package-json-fast
+* [`e52dd76`](https://github.com/npm/map-workspaces/commit/e52dd762b608d5d4ed76c577eac98500053e8398) [#168](https://github.com/npm/map-workspaces/pull/168) `read-package-json-fast@4.0.0`
+* [`2ec2a15`](https://github.com/npm/map-workspaces/commit/2ec2a1537741d36a267f7eed0c70f31c35e5c7a1) [#168](https://github.com/npm/map-workspaces/pull/168) `@npmcli/name-from-folder@3.0.0`
+### Chores
+* [`f066c79`](https://github.com/npm/map-workspaces/commit/f066c79b7305443c3a0ad62d7b0276260a558d34) [#166](https://github.com/npm/map-workspaces/pull/166) bump @npmcli/eslint-config from 4.0.5 to 5.0.0 (#166) (@dependabot[bot])
+* [`888c87c`](https://github.com/npm/map-workspaces/commit/888c87c2275e812715e91a5c29b1eb9679de0484) [#168](https://github.com/npm/map-workspaces/pull/168) run template-oss-apply (@reggi)
+* [`d1b3556`](https://github.com/npm/map-workspaces/commit/d1b355622cefcc28cada257aa20561a0bf4604e1) [#150](https://github.com/npm/map-workspaces/pull/150) bump @npmcli/template-oss to 4.22.0 (@lukekarrys)
+* [`938d94c`](https://github.com/npm/map-workspaces/commit/938d94ccf9fed4f8598368ea741faa33b8e0a3ba) [#162](https://github.com/npm/map-workspaces/pull/162) bump @npmcli/template-oss from 4.22.0 to 4.23.3 (#162) (@dependabot[bot])
+* [`c5cb12c`](https://github.com/npm/map-workspaces/commit/c5cb12c05e703982b0783c50aca54388c163a144) [#150](https://github.com/npm/map-workspaces/pull/150) postinstall for dependabot template-oss PR (@lukekarrys)
+
 ## [3.0.6](https://github.com/npm/map-workspaces/compare/v3.0.5...v3.0.6) (2024-04-10)
 
 ### Bug Fixes
