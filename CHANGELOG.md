@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.0.1](https://github.com/npm/map-workspaces/compare/v4.0.0...v4.0.1) (2024-10-02)
+### Dependencies
+* [`b21250e`](https://github.com/npm/map-workspaces/commit/b21250e9115f29786479ed34ed6c352528366f66) [#172](https://github.com/npm/map-workspaces/pull/172) bump `@npmcli/package-json@6.0.0`
+
 ## [4.0.0](https://github.com/npm/map-workspaces/compare/v3.0.6...v4.0.0) (2024-09-26)
 ### ⚠️ BREAKING CHANGES
 * `@npmcli/map-workspaces` now supports node `^18.17.0 || >=20.5.0`
