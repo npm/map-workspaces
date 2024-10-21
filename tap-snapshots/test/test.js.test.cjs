@@ -41,6 +41,12 @@ Map {
 }
 `
 
+exports[`test/test.js TAP ignore symlink workspace files > should not throw an error 1`] = `
+Map {
+  "a" => "{CWD}/test/tap-testdir-test-ignore-symlink-workspace-files/packages/a",
+}
+`
+
 exports[`test/test.js TAP match duplicates then exclude one > should include the non-excluded item on returned Map 1`] = `
 Map {
   "a" => "{CWD}/test/tap-testdir-test-match-duplicates-then-exclude-one/packages/a",
