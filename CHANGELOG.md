@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.0.2](https://github.com/npm/map-workspaces/compare/v4.0.1...v4.0.2) (2024-11-20)
+### Bug Fixes
+* [`ae9cd9e`](https://github.com/npm/map-workspaces/commit/ae9cd9e090d7737a7d9f5cb0d5b15f7be36acb5a) [#176](https://github.com/npm/map-workspaces/pull/176) ignore `ENOTDIR` errors (#176) (@brianlenz)
+### Chores
+* [`84d179f`](https://github.com/npm/map-workspaces/commit/84d179f7167ae3d50183788fde352f2596b6cc14) [#174](https://github.com/npm/map-workspaces/pull/174) bump @npmcli/template-oss from 4.23.3 to 4.23.4 (#174) (@dependabot[bot], @npm-cli-bot)
+
 ## [4.0.1](https://github.com/npm/map-workspaces/compare/v4.0.0...v4.0.1) (2024-10-02)
 ### Dependencies
 * [`b21250e`](https://github.com/npm/map-workspaces/commit/b21250e9115f29786479ed34ed6c352528366f66) [#172](https://github.com/npm/map-workspaces/pull/172) bump `@npmcli/package-json@6.0.0`
