@@ -982,27 +982,27 @@ test('match duplicates then exclude one', t => {
 })
 
 test('ignore symlink workspace files', t => {
-    const cwd = t.testdir({
-        'index.js': 'console.log("hi");',
-        packages: {
-            a: {
-                'package.json': '{ "name": "a" }',
-                'index.js': t.fixture('symlink', '../../index.js')
-            },
-        },
-    })
+  const cwd = t.testdir({
+    'index.js': 'console.log("hi");',
+    packages: {
+      a: {
+        'package.json': '{ "name": "a" }',
+        'index.js': t.fixture('symlink', '../../index.js'),
+      },
+    },
+  })
 
-    return t.resolveMatchSnapshot(
-            mapWorkspaces({
-                cwd,
-                pkg: {
-                    workspaces: {
-                        packages: [
-                            'packages/**',
-                        ],
-                    },
-                },
-            }),
-            'should not throw an error'
-    )
+  return t.resolveMatchSnapshot(
+    mapWorkspaces({
+      cwd,
+      pkg: {
+        workspaces: {
+          packages: [
+            'packages/**',
+          ],
+        },
+      },
+    }),
+    'should not throw an error'
+  )
 })
