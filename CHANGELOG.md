@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.0.0](https://github.com/npm/map-workspaces/compare/v4.0.2...v5.0.0) (2025-09-02)
+### ⚠️ BREAKING CHANGES
+* `map-workspaces` now supports node `^20.17.0 || >=22.9.0`
+### Bug Fixes
+* [`b54c539`](https://github.com/npm/map-workspaces/commit/b54c5392e959650366550d13b35689ff169a4f62) [#185](https://github.com/npm/map-workspaces/pull/185) align to npm 11 node engine range (@owlstronaut)
+### Dependencies
+* [`930dca7`](https://github.com/npm/map-workspaces/commit/930dca711f8bcaac02c3e3acc65e3c676c3350af) [#185](https://github.com/npm/map-workspaces/pull/185) `@npmcli/package-json@7.0.0`
+* [`fe7d73f`](https://github.com/npm/map-workspaces/commit/fe7d73fea47e1dbdd164b1fa432ccc30663601a4) [#185](https://github.com/npm/map-workspaces/pull/185) `minimatch@10.0.3`
+* [`15820b7`](https://github.com/npm/map-workspaces/commit/15820b7253b0f05ca97ac18ed615f193959f49d9) [#185](https://github.com/npm/map-workspaces/pull/185) `glob@11.0.3`
+### Chores
+* [`a7a510b`](https://github.com/npm/map-workspaces/commit/a7a510be1aa9461fa87008fe951480c92ffa77ed) [#181](https://github.com/npm/map-workspaces/pull/181) postinstall workflow updates (#181) (@owlstronaut)
+* [`909c596`](https://github.com/npm/map-workspaces/commit/909c596b414ade53ec3c8962020e6966976678e6) [#183](https://github.com/npm/map-workspaces/pull/183) bump @npmcli/template-oss from 4.24.4 to 4.25.0 (#183) (@dependabot[bot], @npm-cli-bot)
+
 ## [4.0.2](https://github.com/npm/map-workspaces/compare/v4.0.1...v4.0.2) (2024-11-20)
 ### Bug Fixes
 * [`ae9cd9e`](https://github.com/npm/map-workspaces/commit/ae9cd9e090d7737a7d9f5cb0d5b15f7be36acb5a) [#176](https://github.com/npm/map-workspaces/pull/176) ignore `ENOTDIR` errors (#176) (@brianlenz)
