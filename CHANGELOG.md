@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.0.1](https://github.com/npm/map-workspaces/compare/v5.0.0...v5.0.1) (2025-10-23)
+### Dependencies
+* [`918e40c`](https://github.com/npm/map-workspaces/commit/918e40ce38c4ab823b9d96a6feecaab94319eb8d) [#190](https://github.com/npm/map-workspaces/pull/190) bump @npmcli/name-from-folder from 3.0.0 to 4.0.0 (#190) (@dependabot[bot])
+### Chores
+* [`19946de`](https://github.com/npm/map-workspaces/commit/19946deefe6f575a936eea6594ed310ef736b3a0) [#189](https://github.com/npm/map-workspaces/pull/189) bump @npmcli/template-oss from 4.26.0 to 4.27.1 (#189) (@dependabot[bot], @npm-cli-bot)
+
 ## [5.0.0](https://github.com/npm/map-workspaces/compare/v4.0.2...v5.0.0) (2025-09-02)
 ### ⚠️ BREAKING CHANGES
 * `map-workspaces` now supports node `^20.17.0 || >=22.9.0`
