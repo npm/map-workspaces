@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.2](https://github.com/npm/map-workspaces/compare/v5.0.1...v5.0.2) (2025-11-18)
+### Dependencies
+* [`2e8fc5f`](https://github.com/npm/map-workspaces/commit/2e8fc5ffb16c5217a87c0b8d045ee6c5bb7a7ec2) [#194](https://github.com/npm/map-workspaces/pull/194) bump glob from 11.1.0 to 12.0.0 (#194) (@dependabot[bot])
+### Chores
+* [`118806e`](https://github.com/npm/map-workspaces/commit/118806eb012797def93e59cb3570fb6d989d743f) [#192](https://github.com/npm/map-workspaces/pull/192) bump @npmcli/eslint-config from 5.1.0 to 6.0.0 (#192) (@dependabot[bot])
+* [`fe96f03`](https://github.com/npm/map-workspaces/commit/fe96f03081409281dd5931c3e97170212e0f84f6) [#193](https://github.com/npm/map-workspaces/pull/193) bump @npmcli/template-oss from 4.27.1 to 4.28.0 (#193) (@dependabot[bot], @npm-cli-bot)
+
 ## [5.0.1](https://github.com/npm/map-workspaces/compare/v5.0.0...v5.0.1) (2025-10-23)
 ### Dependencies
 * [`918e40c`](https://github.com/npm/map-workspaces/commit/918e40ce38c4ab823b9d96a6feecaab94319eb8d) [#190](https://github.com/npm/map-workspaces/pull/190) bump @npmcli/name-from-folder from 3.0.0 to 4.0.0 (#190) (@dependabot[bot])
