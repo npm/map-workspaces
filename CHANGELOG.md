@@ -1,5 +1,9 @@
 # Changelog
 
+## [5.0.3](https://github.com/npm/map-workspaces/compare/v5.0.2...v5.0.3) (2025-11-20)
+### Dependencies
+* [`c5925ef`](https://github.com/npm/map-workspaces/commit/c5925efb77f1e1cbfb48ab07a9585e8b13cdf879) [#196](https://github.com/npm/map-workspaces/pull/196) bump glob from 12.0.0 to 13.0.0 (#196) (@dependabot[bot])
+
 ## [5.0.2](https://github.com/npm/map-workspaces/compare/v5.0.1...v5.0.2) (2025-11-18)
 ### Dependencies
 * [`2e8fc5f`](https://github.com/npm/map-workspaces/commit/2e8fc5ffb16c5217a87c0b8d045ee6c5bb7a7ec2) [#194](https://github.com/npm/map-workspaces/pull/194) bump glob from 11.1.0 to 12.0.0 (#194) (@dependabot[bot])
