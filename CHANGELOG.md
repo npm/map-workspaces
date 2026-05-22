@@ -1,5 +1,21 @@
 # Changelog
 
+## [6.0.0](https://github.com/npm/map-workspaces/compare/v5.0.3...v6.0.0) (2026-05-22)
+### ⚠️ BREAKING CHANGES
+* `@npmcli/map-workspaces` now supports node `^22.22.2 || ^24.15.0 || >=26.0.0`
+* template-oss-apply
+### Features
+* [`ff455dc`](https://github.com/npm/map-workspaces/commit/ff455dcd763bc305289a4c6093ad4aa6b991a1d9) [#207](https://github.com/npm/map-workspaces/pull/207) bump to new node engine range (@owlstronaut)
+* [`213a6f4`](https://github.com/npm/map-workspaces/commit/213a6f4b0443ff18baac3da5f76d3e3df5c4cc79) [#207](https://github.com/npm/map-workspaces/pull/207) template-oss-apply (@owlstronaut)
+### Dependencies
+* [`655bf66`](https://github.com/npm/map-workspaces/commit/655bf660c0236a7be7a4c8e9ca404c7d0f9effac) [#207](https://github.com/npm/map-workspaces/pull/207) `@npmcli/package-json@8.0.0`
+* [`46aba3b`](https://github.com/npm/map-workspaces/commit/46aba3b9841845cc39f8112ccd82795d2062f3af) [#207](https://github.com/npm/map-workspaces/pull/207) `@npmcli/name-from-folder@5.0.0`
+### Chores
+* [`910a3b3`](https://github.com/npm/map-workspaces/commit/910a3b3073fe4f82cc0cde429b1166431b42f071) [#207](https://github.com/npm/map-workspaces/pull/207) `@npmcli/eslint-config@7.0.0` (@owlstronaut)
+* [`c5785f4`](https://github.com/npm/map-workspaces/commit/c5785f44f59ad324bc1a9db357b01ad962f8a193) [#207](https://github.com/npm/map-workspaces/pull/207) template-oss-apply (@owlstronaut)
+* [`95b6ab2`](https://github.com/npm/map-workspaces/commit/95b6ab2aab026d8eb5e535ccc32349a70bee18ce) [#207](https://github.com/npm/map-workspaces/pull/207) bumping @npmcli/template-oss from 4.30.0 to 5.1.0 (@owlstronaut)
+* [`0623bf3`](https://github.com/npm/map-workspaces/commit/0623bf3ea64f359c17dcb540b9ddca0885aba78e) [#202](https://github.com/npm/map-workspaces/pull/202) bump @npmcli/template-oss from 4.29.0 to 4.30.0 (#202) (@dependabot[bot], @npm-cli-bot)
+
 ## [5.0.3](https://github.com/npm/map-workspaces/compare/v5.0.2...v5.0.3) (2025-11-20)
 ### Dependencies
 * [`c5925ef`](https://github.com/npm/map-workspaces/commit/c5925efb77f1e1cbfb48ab07a9585e8b13cdf879) [#196](https://github.com/npm/map-workspaces/pull/196) bump glob from 12.0.0 to 13.0.0 (#196) (@dependabot[bot])
