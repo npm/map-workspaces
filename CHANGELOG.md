@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.0.1](https://github.com/npm/map-workspaces/compare/v6.0.0...v6.0.1) (2026-11-17)
+### Dependencies
+* [`8113acb`](https://github.com/npm/map-workspaces/commit/8113acbec4781503901e992d60198c735aa5e2bb) [#211](https://github.com/npm/map-workspaces/pull/211) `minimatch@11.0.2` (@jeffkl, @Copilot)
+* [`a6b6f9c`](https://github.com/npm/map-workspaces/commit/a6b6f9c0fad2fe2061fef1d5df6c808f25cc43cf) [#211](https://github.com/npm/map-workspaces/pull/211) `@npmcli/package-json@8.0.1` (@jeffkl, @Copilot)
+* [`964b9ec`](https://github.com/npm/map-workspaces/commit/964b9ec1885b4f637febb42661ec37dc61ab5622) [#211](https://github.com/npm/map-workspaces/pull/211) `glob@14.0.5` (@jeffkl, @Copilot)
+### Chores
+* [`76ea3c8`](https://github.com/npm/map-workspaces/commit/76ea3c852171790e245052e006329de15b09e60e) [#209](https://github.com/npm/map-workspaces/pull/209) bump @npmcli/template-oss from 5.1.0 to 5.1.1 (#209) (@dependabot[bot], @npm-cli-bot)
+
 ## [6.0.0](https://github.com/npm/map-workspaces/compare/v5.0.3...v6.0.0) (2026-05-22)
 ### ⚠️ BREAKING CHANGES
 * `@npmcli/map-workspaces` now supports node `^22.22.2 || ^24.15.0 || >=26.0.0`
