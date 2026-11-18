@@ -953,6 +953,83 @@ test('matched then negated then match again', t => {
   )
 })
 
+test('reinclude workspaces after multiple exclusions', async t => {
+  const packages = {
+    'packages/a': { name: 'outer' },
+    'packages/b/a': { name: 'inner' },
+    'packages/skip': { name: 'skip' },
+  }
+  const cwd = t.testdir({
+    packages: {
+      a: {
+        'package.json': JSON.stringify(packages['packages/a']),
+      },
+      b: {
+        a: {
+          'package.json': JSON.stringify(packages['packages/b/a']),
+        },
+      },
+      skip: {
+        'package.json': JSON.stringify(packages['packages/skip']),
+      },
+    },
+  })
+
+  const cases = [
+    [
+      'adjacent exclusions',
+      ['!packages/b/**', '!packages/b/a', '!packages/skip'],
+    ],
+    [
+      'reversed exclusions',
+      ['!packages/b/a', '!packages/b/**', '!packages/skip'],
+    ],
+    [
+      'three adjacent exclusions',
+      ['!packages/b/**', '!packages/b/*', '!packages/b/a', '!packages/skip'],
+    ],
+    [
+      'duplicate exclusions',
+      ['!packages/b/a', '!packages/b/a', '!packages/skip'],
+    ],
+    [
+      'interleaved unrelated exclusion',
+      ['!packages/b/**', '!packages/skip', '!packages/b/a'],
+    ],
+    [
+      'last exclusion wins',
+      ['!packages/b/**', '!packages/b/a', '!packages/skip'],
+      true,
+    ],
+  ]
+
+  for (const [name, exclusions, excludeAgain] of cases) {
+    const workspaces = [
+      'packages/**',
+      ...exclusions,
+      'packages/b/a',
+    ]
+    if (excludeAgain) {
+      workspaces.push('!packages/b/a')
+    }
+
+    const expected = excludeAgain ? ['outer'] : ['inner', 'outer']
+    const disk = await mapWorkspaces({ cwd, pkg: { workspaces } })
+    const virtual = mapWorkspaces.virtual({
+      cwd,
+      lockfile: {
+        packages: {
+          '': { workspaces },
+          ...packages,
+        },
+      },
+    })
+
+    t.same([...disk.keys()].sort(), expected, `${name}: disk`)
+    t.same([...virtual.keys()].sort(), expected, `${name}: virtual`)
+  }
+})
+
 test('match duplicates then exclude one', t => {
   const cwd = t.testdir({
     packages: {
