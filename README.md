@@ -79,6 +79,9 @@ await mapWorkspaces({
   - `ignore`: An **Array** of paths to be ignored when using [globs](https://www.npmjs.com/package/glob) to look for nested package.
   - ...[Also support all other glob options](https://www.npmjs.com/package/glob#options)
 
+Matching options such as `dot` and `nocase` also apply when ordering the discovered
+workspaces. Paths beginning with `#` are treated as literal paths, as in `glob`.
+
 #### Returns
 
 A **Map** in which keys are **package names** and values are the **pathnames** for each found **workspace**.
