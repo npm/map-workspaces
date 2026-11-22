@@ -2,6 +2,76 @@ const tap = require('tap')
 const { test } = tap
 
 const mapWorkspaces = require('../')
+const { Glob } = require('glob')
+const { join } = require('path')
+
+test('glob dot option is preserved when ordering workspaces', async t => {
+  const cwd = t.testdir({
+    packages: {
+      '.hidden': { 'package.json': '{ "name": "hidden" }' },
+      visible: { 'package.json': '{ "name": "visible" }' },
+    },
+  })
+
+  const cases = [
+    { options: {}, patterns: ['packages/*'], names: ['visible'] },
+    { options: { dot: false }, patterns: ['packages/*'], names: ['visible'] },
+    { options: { dot: true }, patterns: ['packages/*'], names: ['hidden', 'visible'] },
+    {
+      options: { dot: true },
+      patterns: ['packages/visible', 'packages/*'],
+      names: ['visible', 'hidden'],
+    },
+    {
+      options: { dot: true, ignore: ['**/.hidden/**'] },
+      patterns: ['packages/*'],
+      names: ['visible'],
+    },
+    {
+      options: { dot: false },
+      patterns: ['packages/*', 'packages/.hidden'],
+      names: ['visible', 'hidden'],
+    },
+  ]
+  for (const { options, patterns, names } of cases) {
+    const result = await mapWorkspaces({ cwd, pkg: { workspaces: patterns }, ...options })
+    t.same([...result], names.map(name => [name, join(cwd, 'packages',
+      name === 'hidden' ? '.hidden' : name)]), JSON.stringify({ options, patterns }))
+  }
+})
+
+test('glob case sensitivity is preserved when ordering workspaces', async t => {
+  const cwd = t.testdir({
+    packages: {
+      UPPER: { 'package.json': '{ "name": "upper" }' },
+      lower: { 'package.json': '{ "name": "lower" }' },
+    },
+  })
+  const nocase = new Glob('packages/u*/', { cwd }).nocase
+  const cases = [
+    { options: {}, names: nocase ? ['upper', 'lower'] : ['lower'] },
+    { options: { nocase: true }, names: ['upper', 'lower'] },
+    { options: { nocase: false }, names: ['lower'] },
+    { options: { nocase: true, ignore: ['**/UPPER/**'] }, names: ['lower'] },
+  ]
+  for (const { options, names } of cases) {
+    const result = await mapWorkspaces({
+      cwd,
+      pkg: { workspaces: ['packages/u*', 'packages/lower'] },
+      ...options,
+    })
+    t.same([...result], names.map(name => [name, join(cwd, 'packages',
+      name === 'upper' ? 'UPPER' : name)]), JSON.stringify(options))
+  }
+})
+
+test('workspace patterns starting with # are literal paths, not comments', async t => {
+  const cwd = t.testdir({
+    '#tools': { 'package.json': '{ "name": "tools" }' },
+  })
+  const result = await mapWorkspaces({ cwd, pkg: { workspaces: ['#tools'] } })
+  t.same([...result], [['tools', join(cwd, '#tools')]])
+})
 
 tap.cleanSnapshot = str => {
   const cleanPath = path => path
