@@ -497,3 +497,59 @@ test('matched then negated then match again then negate again', t => {
   )
   t.end()
 })
+
+test('virtual workspaces accept directory patterns', async t => {
+  const { join } = require('node:path')
+  const cwd = t.testdir({
+    a: { 'package.json': '{ "name": "root-a" }' },
+    packages: {
+      a: { 'package.json': '{ "name": "pkg-a" }' },
+      b: { 'package.json': '{ "name": "pkg-b" }' },
+      nested: { c: { 'package.json': '{ "name": "pkg-c" }' } },
+      node_modules: {
+        ignored: { 'package.json': '{ "name": "ignored" }' },
+      },
+    },
+  })
+  const packagePaths = {
+    'root-a': 'a',
+    'pkg-a': 'packages/a',
+    'pkg-b': 'packages/b',
+    'pkg-c': 'packages/nested/c',
+  }
+  const cases = [
+    { patterns: ['a/'], names: ['root-a'] },
+    { patterns: ['packages/*/'], names: ['pkg-a', 'pkg-b'] },
+    { patterns: ['packages/**/'], names: ['pkg-a', 'pkg-b', 'pkg-c'] },
+    { patterns: ['./packages/*/'], names: ['pkg-a', 'pkg-b'] },
+    { patterns: ['packages/*/', '!packages/b/'], names: ['pkg-a'] },
+    { patterns: ['packages/*', '!packages/b/'], names: ['pkg-a'] },
+    { patterns: ['packages/b/', 'a/', 'packages/a/'], names: ['pkg-b', 'root-a', 'pkg-a'] },
+    { patterns: ['packages/*/', '!packages/b/', 'packages/b/'], names: ['pkg-a', 'pkg-b'] },
+    { patterns: ['packages/*/', '!!a/'], names: ['pkg-a', 'pkg-b', 'root-a'] },
+    { patterns: ['packages/*/', '!!!packages/b/'], names: ['pkg-a'] },
+    { patterns: ['packages/*/', 'packages/node_modules/*/'], names: ['pkg-a', 'pkg-b'] },
+    { patterns: ['packages/*/'], names: ['pkg-a', 'pkg-b'], legacy: true },
+  ]
+
+  for (const { patterns, names, legacy } of cases) {
+    const workspaces = legacy ? { packages: patterns } : patterns
+    const lockfile = {
+      lockfileVersion: 3,
+      packages: {
+        '': { workspaces },
+        a: { name: 'root-a' },
+        'packages/a': { name: 'pkg-a' },
+        'packages/b': { name: 'pkg-b' },
+        'packages/nested/c': { name: 'pkg-c' },
+        'packages/node_modules/ignored': { name: 'ignored' },
+        'node_modules/pkg-a': { resolved: 'packages/a', link: true },
+      },
+    }
+    const original = JSON.stringify(lockfile)
+    const expected = new Map(names.map(name => [name, join(cwd, packagePaths[name])]))
+    t.same(mapWorkspaces.virtual({ cwd, lockfile }), expected, JSON.stringify(workspaces))
+    t.same(await mapWorkspaces({ cwd, pkg: { workspaces } }), expected, 'matches disk workspaces')
+    t.equal(JSON.stringify(lockfile), original, 'does not mutate the lockfile or patterns')
+  }
+})
